@@ -10,6 +10,17 @@
 		40EC96F4217BC24F009AE660 /* MDBProvider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40EC96EA217BC24E009AE660 /* MDBProvider.framework */; };
 		40EC96F9217BC24F009AE660 /* MDBProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EC96F8217BC24F009AE660 /* MDBProviderTests.swift */; };
 		40EC96FB217BC24F009AE660 /* MDBProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 40EC96ED217BC24E009AE660 /* MDBProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		40EC9705217BC40D009AE660 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EC9704217BC40D009AE660 /* Endpoint.swift */; };
+		40EC9709217BC4A8009AE660 /* NowPlaying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EC9708217BC4A8009AE660 /* NowPlaying.swift */; };
+		40EC970C217BC4E9009AE660 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EC970B217BC4E9009AE660 /* Search.swift */; };
+		40F8217A217CF30600B55CDF /* MDBProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F82179217CF30600B55CDF /* MDBProvider.swift */; };
+		40F8217D217D061800B55CDF /* SecureSeeeion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F8217C217D061800B55CDF /* SecureSeeeion.swift */; };
+		40F8217F217D065A00B55CDF /* developers.themoviedb.org.cer in Resources */ = {isa = PBXBuildFile; fileRef = 40F8217E217D065A00B55CDF /* developers.themoviedb.org.cer */; };
+		40F82181217D0D2500B55CDF /* EnvironmentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F82180217D0D2500B55CDF /* EnvironmentConfiguration.swift */; };
+		40F82184217D0F3C00B55CDF /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 40F82183217D0F3C00B55CDF /* config.plist */; };
+		40F82188217D161D00B55CDF /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F82187217D161D00B55CDF /* Movie.swift */; };
+		40F8218A217D176E00B55CDF /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F82189217D176E00B55CDF /* Response.swift */; };
+		40F8218C217D252B00B55CDF /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 40F8218B217D252B00B55CDF /* config.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +40,17 @@
 		40EC96F3217BC24F009AE660 /* MDBProviderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MDBProviderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		40EC96F8217BC24F009AE660 /* MDBProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDBProviderTests.swift; sourceTree = "<group>"; };
 		40EC96FA217BC24F009AE660 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		40EC9704217BC40D009AE660 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
+		40EC9708217BC4A8009AE660 /* NowPlaying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlaying.swift; sourceTree = "<group>"; };
+		40EC970B217BC4E9009AE660 /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
+		40F82179217CF30600B55CDF /* MDBProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDBProvider.swift; sourceTree = "<group>"; };
+		40F8217C217D061800B55CDF /* SecureSeeeion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureSeeeion.swift; sourceTree = "<group>"; };
+		40F8217E217D065A00B55CDF /* developers.themoviedb.org.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = developers.themoviedb.org.cer; sourceTree = "<group>"; };
+		40F82180217D0D2500B55CDF /* EnvironmentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentConfiguration.swift; sourceTree = "<group>"; };
+		40F82183217D0F3C00B55CDF /* config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
+		40F82187217D161D00B55CDF /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		40F82189217D176E00B55CDF /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
+		40F8218B217D252B00B55CDF /* config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,8 +93,13 @@
 		40EC96EC217BC24E009AE660 /* MDBProvider */ = {
 			isa = PBXGroup;
 			children = (
-				40EC96ED217BC24E009AE660 /* MDBProvider.h */,
+				40F82182217D0F1B00B55CDF /* Meta */,
+				40EC9707217BC449009AE660 /* Model */,
+				40EC9706217BC440009AE660 /* Endpoints */,
+				40F8217B217D060500B55CDF /* Utilities */,
+				40F82179217CF30600B55CDF /* MDBProvider.swift */,
 				40EC96EE217BC24E009AE660 /* Info.plist */,
+				40F82183217D0F3C00B55CDF /* config.plist */,
 			);
 			path = MDBProvider;
 			sourceTree = "<group>";
@@ -82,8 +109,54 @@
 			children = (
 				40EC96F8217BC24F009AE660 /* MDBProviderTests.swift */,
 				40EC96FA217BC24F009AE660 /* Info.plist */,
+				40F8218B217D252B00B55CDF /* config.plist */,
 			);
 			path = MDBProviderTests;
+			sourceTree = "<group>";
+		};
+		40EC9706217BC440009AE660 /* Endpoints */ = {
+			isa = PBXGroup;
+			children = (
+				40EC9704217BC40D009AE660 /* Endpoint.swift */,
+				40EC970A217BC4AE009AE660 /* Movies */,
+			);
+			path = Endpoints;
+			sourceTree = "<group>";
+		};
+		40EC9707217BC449009AE660 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				40F82187217D161D00B55CDF /* Movie.swift */,
+				40F82189217D176E00B55CDF /* Response.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		40EC970A217BC4AE009AE660 /* Movies */ = {
+			isa = PBXGroup;
+			children = (
+				40EC9708217BC4A8009AE660 /* NowPlaying.swift */,
+				40EC970B217BC4E9009AE660 /* Search.swift */,
+			);
+			path = Movies;
+			sourceTree = "<group>";
+		};
+		40F8217B217D060500B55CDF /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				40F82180217D0D2500B55CDF /* EnvironmentConfiguration.swift */,
+				40F8217C217D061800B55CDF /* SecureSeeeion.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		40F82182217D0F1B00B55CDF /* Meta */ = {
+			isa = PBXGroup;
+			children = (
+				40F8217E217D065A00B55CDF /* developers.themoviedb.org.cer */,
+				40EC96ED217BC24E009AE660 /* MDBProvider.h */,
+			);
+			path = Meta;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -148,6 +221,7 @@
 				TargetAttributes = {
 					40EC96E9217BC24E009AE660 = {
 						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = 1000;
 					};
 					40EC96F2217BC24F009AE660 = {
 						CreatedOnToolsVersion = 10.0;
@@ -177,6 +251,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				40F82184217D0F3C00B55CDF /* config.plist in Resources */,
+				40F8217F217D065A00B55CDF /* developers.themoviedb.org.cer in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -184,6 +260,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				40F8218C217D252B00B55CDF /* config.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,6 +271,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				40F8217A217CF30600B55CDF /* MDBProvider.swift in Sources */,
+				40F8217D217D061800B55CDF /* SecureSeeeion.swift in Sources */,
+				40EC970C217BC4E9009AE660 /* Search.swift in Sources */,
+				40F8218A217D176E00B55CDF /* Response.swift in Sources */,
+				40F82181217D0D2500B55CDF /* EnvironmentConfiguration.swift in Sources */,
+				40EC9709217BC4A8009AE660 /* NowPlaying.swift in Sources */,
+				40EC9705217BC40D009AE660 /* Endpoint.swift in Sources */,
+				40F82188217D161D00B55CDF /* Movie.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,6 +426,7 @@
 		40EC96FF217BC24F009AE660 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -350,6 +436,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = MDBProvider/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -358,6 +445,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.descorp.MDBProvider;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -366,6 +454,7 @@
 		40EC9700217BC24F009AE660 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -375,6 +464,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = MDBProvider/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -391,6 +481,7 @@
 		40EC9702217BC24F009AE660 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R596F9CQZ5;
 				INFOPLIST_FILE = MDBProviderTests/Info.plist;
@@ -409,6 +500,7 @@
 		40EC9703217BC24F009AE660 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R596F9CQZ5;
 				INFOPLIST_FILE = MDBProviderTests/Info.plist;
