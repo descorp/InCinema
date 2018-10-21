@@ -10,6 +10,8 @@ import XCTest
 @testable import MDBProvider
 
 class MDBProviderTests: XCTestCase {
+    
+    private let apiKey = "Your API key here"
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -22,13 +24,17 @@ class MDBProviderTests: XCTestCase {
     func testExample() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+        let sut = MDBProvider(apiKey: apiKey)
+        sut.request(Endpoint.nowPlaying()) { (result) in
+            switch result {
+            case let .success(responce):
+                XCTAssertNotNil(responce)
+                XCTAssertNotNil(responce.results)
+                XCTAssertTrue(responce.results.count > 0)
+            case let .failure(error):
+                print(error)
+                XCTFail()
+            }
         }
     }
-
 }
