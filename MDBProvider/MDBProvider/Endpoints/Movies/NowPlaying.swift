@@ -10,7 +10,7 @@ import Foundation
 
 extension Endpoint where T == Response<Movie>  {
     static func nowPlaying(page pageNumber: Int? = nil, region regCode: String? = nil, language langCode: String? = nil) -> Endpoint {
-        var queries = [URLQueryItem(name: "api_key", value: "")]
+        var queries = [URLQueryItem]()
         if let page = pageNumber { queries.append(URLQueryItem(name: "page", value: "\(page)")) }
         if let region = regCode { queries.append(URLQueryItem(name: "region", value: region)) }
         if let language = langCode { queries.append(URLQueryItem(name: "language", value: language)) }

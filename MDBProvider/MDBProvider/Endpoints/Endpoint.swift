@@ -20,7 +20,9 @@ extension Endpoint {
         components.scheme = "https"
         components.host = config.baseApiUrl
         components.path = "/\(config.version)" + path
-        components.queryItems = queryItems
+        var mutableQueryArray = queryItems
+        mutableQueryArray.append(URLQueryItem(name: "api_key", value: config.appKey))
+        components.queryItems = mutableQueryArray
         
         return components.url
     }
