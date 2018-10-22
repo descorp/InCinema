@@ -40,7 +40,9 @@ final internal class MDBProvider {
             if let data = data,
                 let result = try? endpoint.parse(data) {
                 handler(.success(result))
+                return
             }
+            
             handler(.failure(MDBProviderError.network(error)))
             return
         }
