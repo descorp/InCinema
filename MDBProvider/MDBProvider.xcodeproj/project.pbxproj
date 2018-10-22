@@ -15,12 +15,11 @@
 		40EC970C217BC4E9009AE660 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EC970B217BC4E9009AE660 /* Search.swift */; };
 		40F8217A217CF30600B55CDF /* MDBProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F82179217CF30600B55CDF /* MDBProvider.swift */; };
 		40F8217D217D061800B55CDF /* SecureSeeeion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F8217C217D061800B55CDF /* SecureSeeeion.swift */; };
-		40F8217F217D065A00B55CDF /* developers.themoviedb.org.cer in Resources */ = {isa = PBXBuildFile; fileRef = 40F8217E217D065A00B55CDF /* developers.themoviedb.org.cer */; };
 		40F82181217D0D2500B55CDF /* EnvironmentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F82180217D0D2500B55CDF /* EnvironmentConfiguration.swift */; };
 		40F82184217D0F3C00B55CDF /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 40F82183217D0F3C00B55CDF /* config.plist */; };
 		40F82188217D161D00B55CDF /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F82187217D161D00B55CDF /* Movie.swift */; };
 		40F8218A217D176E00B55CDF /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F82189217D176E00B55CDF /* Response.swift */; };
-		40F8218C217D252B00B55CDF /* config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 40F8218B217D252B00B55CDF /* config.plist */; };
+		40F8226C217E85E900B55CDF /* *.themoviedb.org.cer in Resources */ = {isa = PBXBuildFile; fileRef = 40F8226B217E85E900B55CDF /* *.themoviedb.org.cer */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,12 +44,11 @@
 		40EC970B217BC4E9009AE660 /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		40F82179217CF30600B55CDF /* MDBProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MDBProvider.swift; sourceTree = "<group>"; };
 		40F8217C217D061800B55CDF /* SecureSeeeion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureSeeeion.swift; sourceTree = "<group>"; };
-		40F8217E217D065A00B55CDF /* developers.themoviedb.org.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = developers.themoviedb.org.cer; sourceTree = "<group>"; };
 		40F82180217D0D2500B55CDF /* EnvironmentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentConfiguration.swift; sourceTree = "<group>"; };
 		40F82183217D0F3C00B55CDF /* config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
 		40F82187217D161D00B55CDF /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		40F82189217D176E00B55CDF /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
-		40F8218B217D252B00B55CDF /* config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = config.plist; sourceTree = "<group>"; };
+		40F8226B217E85E900B55CDF /* *.themoviedb.org.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = "*.themoviedb.org.cer"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,7 +107,6 @@
 			children = (
 				40EC96F8217BC24F009AE660 /* MDBProviderTests.swift */,
 				40EC96FA217BC24F009AE660 /* Info.plist */,
-				40F8218B217D252B00B55CDF /* config.plist */,
 			);
 			path = MDBProviderTests;
 			sourceTree = "<group>";
@@ -153,7 +150,7 @@
 		40F82182217D0F1B00B55CDF /* Meta */ = {
 			isa = PBXGroup;
 			children = (
-				40F8217E217D065A00B55CDF /* developers.themoviedb.org.cer */,
+				40F8226B217E85E900B55CDF /* *.themoviedb.org.cer */,
 				40EC96ED217BC24E009AE660 /* MDBProvider.h */,
 			);
 			path = Meta;
@@ -252,7 +249,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				40F82184217D0F3C00B55CDF /* config.plist in Resources */,
-				40F8217F217D065A00B55CDF /* developers.themoviedb.org.cer in Resources */,
+				40F8226C217E85E900B55CDF /* *.themoviedb.org.cer in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,7 +257,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				40F8218C217D252B00B55CDF /* config.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
