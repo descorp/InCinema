@@ -21,20 +21,26 @@ class MDBProviderTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() {
+    func testNowPlayingSuccessfull() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
         let sut = MDBProvider(apiKey: apiKey)
+        let successExpectation = expectation(description: "Success")
+        
         sut.request(Endpoint.nowPlaying()) { (result) in
+            print(result)
             switch result {
             case let .success(responce):
                 XCTAssertNotNil(responce)
                 XCTAssertNotNil(responce.results)
                 XCTAssertTrue(responce.results.count > 0)
+                successExpectation.fulfill()
             case let .failure(error):
                 print(error)
                 XCTFail()
             }
         }
+        
+        waitForExpectations(timeout: 5, handler: nil)
     }
 }
