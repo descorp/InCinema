@@ -12,6 +12,7 @@ import XCTest
 class MDBProviderTests: XCTestCase {
     
     private let apiKey = "Your API key here"
+    private let movieId = 297761
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -28,12 +29,54 @@ class MDBProviderTests: XCTestCase {
         let successExpectation = expectation(description: "Success")
         
         sut.request(Endpoint.nowPlaying()) { (result) in
-            print(result)
             switch result {
             case let .success(responce):
                 XCTAssertNotNil(responce)
                 XCTAssertNotNil(responce.results)
                 XCTAssertTrue(responce.results.count > 0)
+                successExpectation.fulfill()
+            case let .failure(error):
+                print(error)
+                XCTFail()
+            }
+        }
+        
+        waitForExpectations(timeout: 5, handler: nil)
+    }
+    
+    func testSearchSuccessfull() {
+        // This is an example of a functional test case.
+        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        let sut = MDBProvider(apiKey: apiKey)
+        let successExpectation = expectation(description: "Success")
+        
+        sut.request(Endpoint.searchMovie(query: "Solaris")) { (result) in
+            switch result {
+            case let .success(responce):
+                XCTAssertNotNil(responce)
+                XCTAssertNotNil(responce.results)
+                XCTAssertTrue(responce.results.count > 0)
+                successExpectation.fulfill()
+            case let .failure(error):
+                print(error)
+                XCTFail()
+            }
+        }
+        
+        waitForExpectations(timeout: 5, handler: nil)
+    }
+    
+    func testGetMoviewSuccessfull() {
+        // This is an example of a functional test case.
+        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        let sut = MDBProvider(apiKey: apiKey)
+        let successExpectation = expectation(description: "Success")
+        
+        sut.request(Endpoint.getMovie(id: movieId)) { (result) in
+            switch result {
+            case let .success(responce):
+                XCTAssertNotNil(responce)
+                XCTAssertEqual(responce.id, self.movieId)
                 successExpectation.fulfill()
             case let .failure(error):
                 print(error)
