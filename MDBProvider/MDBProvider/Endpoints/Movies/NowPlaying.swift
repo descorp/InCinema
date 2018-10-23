@@ -18,7 +18,7 @@ extension Endpoint where T == Response<Movie>  {
         return Endpoint(
             path: "/movie/now_playing",
             queryItems: queries,
-            parse: T.parse
+            parse: T.decode
         )
     }
 }

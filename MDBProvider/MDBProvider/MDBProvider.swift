@@ -19,7 +19,7 @@ public enum MDBProviderError: Error {
     case parsingError
 }
 
-final internal class MDBProvider {
+final public class MDBProvider {
     private let config: EnvironmentConfiguration
     private static let sessionSecurity = SecureURLSession()
     private let urlSession = URLSession(configuration: URLSessionConfiguration.default,
@@ -37,14 +37,17 @@ final internal class MDBProvider {
         }
         
         let task = urlSession.dataTask(with: url) { data, _, error in
-            if let data = data,
-                let result = try? endpoint.parse(data) {
+            if let error = error {
+                handler(.failure(MDBProviderError.network(error)))
+                return
+            }
+            
+            if let data = data, let result = try? endpoint.parse(data) {
                 handler(.success(result))
                 return
             }
             
-            handler(.failure(MDBProviderError.network(error)))
-            return
+            handler(.failure(MDBProviderError.parsingError))
         }
         
         task.resume()

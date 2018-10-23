@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		40A89BAD217FB9410024948F /* Parsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A89BAC217FB9410024948F /* Parsable.swift */; };
 		40EC96F4217BC24F009AE660 /* MDBProvider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40EC96EA217BC24E009AE660 /* MDBProvider.framework */; };
 		40EC96F9217BC24F009AE660 /* MDBProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40EC96F8217BC24F009AE660 /* MDBProviderTests.swift */; };
 		40EC96FB217BC24F009AE660 /* MDBProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 40EC96ED217BC24E009AE660 /* MDBProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -33,6 +34,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		40A89BAC217FB9410024948F /* Parsable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parsable.swift; sourceTree = "<group>"; };
 		40EC96EA217BC24E009AE660 /* MDBProvider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MDBProvider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		40EC96ED217BC24E009AE660 /* MDBProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MDBProvider.h; sourceTree = "<group>"; };
 		40EC96EE217BC24E009AE660 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 			children = (
 				40F82180217D0D2500B55CDF /* EnvironmentConfiguration.swift */,
 				40F8217C217D061800B55CDF /* SecureSeeeion.swift */,
+				40A89BAC217FB9410024948F /* Parsable.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -272,6 +275,7 @@
 				40EC970C217BC4E9009AE660 /* Search.swift in Sources */,
 				40F8218A217D176E00B55CDF /* Response.swift in Sources */,
 				40F82181217D0D2500B55CDF /* EnvironmentConfiguration.swift in Sources */,
+				40A89BAD217FB9410024948F /* Parsable.swift in Sources */,
 				40EC9709217BC4A8009AE660 /* NowPlaying.swift in Sources */,
 				40EC9705217BC40D009AE660 /* Endpoint.swift in Sources */,
 				40F82188217D161D00B55CDF /* Movie.swift in Sources */,

@@ -9,7 +9,8 @@
 import Foundation
 
 extension Endpoint where T == Response<Movie> {
-    static func searchMovie(query: String, year: Int?, page: Int?, region: String?, language: String?) -> Endpoint {
+    static func searchMovie(query: String, year: Int? = nil, page: Int? = nil,
+                            region: String? = nil, language: String? = nil) -> Endpoint {
         var queries = [URLQueryItem(name: "query", value: query),]        
         if let year = year { queries.append(URLQueryItem(name: "year", value: "\(year)")) }
         if let page = page { queries.append(URLQueryItem(name: "page", value: "\(page)")) }
@@ -19,7 +20,7 @@ extension Endpoint where T == Response<Movie> {
         return Endpoint(
             path: "/search/movie",
             queryItems: queries,
-            parse: T.parse
+            parse: T.decode
         )
     }
 }

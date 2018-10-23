@@ -19,9 +19,3 @@ public struct Response<T: Codable>: Codable {
         case totalPages = "total_pages"
     }
 }
-
-extension Response {
-    static func parse(data: Data) throws -> Response {
-        return try JSONDecoder().decode(self, from: data)
-    }
-}
