@@ -9,7 +9,9 @@
 import Foundation
 import UIKit
 
-struct AppDependency {
+struct AppDependency: HasMDB, HasLocation {
+    let moviesService: IMoviesProvider
+    let locationService: ILocationService
 }
 
 class AppCoordinator: Coordinator {
@@ -21,7 +23,7 @@ class AppCoordinator: Coordinator {
     // MARK: - Coordinator
     init(window: UIWindow) {
         self.window = window
-        self.dependency = AppDependency()
+        self.dependency = AppDependency(moviesService: MoviesService(apiKey: ""), locationService: LocationService())
         super.init(withViewController: UINavigationController())
         
         window.rootViewController = self.rootViewController

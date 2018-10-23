@@ -7,10 +7,11 @@
 //
 
 import Foundation
+import UIKit
 
 class NowInCinemaCoodrinator: Coordinator {
     
-    typealias Dependency
+    typealias Dependency = HasLocation & HasMDB
     
     let dependency: Dependency
     
@@ -26,7 +27,7 @@ class NowInCinemaCoodrinator: Coordinator {
             let navigationController =  (rootViewController as? UINavigationController)
             else { return }
         
-        let viewController: BitcoinIndexViewController = BitcoinIndexViewController(dependency: dependency)
+        let viewController = 
         navigationController.setViewControllers([viewController], animated: false)
     }
 }
