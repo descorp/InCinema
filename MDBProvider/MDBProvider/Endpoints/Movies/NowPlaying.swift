@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Endpoint where T == Response<Movie>  {
+public extension Endpoint where T == Response<Movie>  {
     static func nowPlaying(page pageNumber: Int? = nil, region regCode: String? = nil, language langCode: String? = nil) -> Endpoint {
         var queries = [URLQueryItem]()
         if let page = pageNumber { queries.append(URLQueryItem(name: "page", value: "\(page)")) }

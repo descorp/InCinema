@@ -31,7 +31,7 @@ final public class MDBProvider {
         self.config.appKey = apiKey
     }
     
-    func request<T>(_ endpoint: Endpoint<T>, then handler: @escaping (Result<T>) -> Void) {
+    public func request<T>(_ endpoint: Endpoint<T>, then handler: @escaping (Result<T>) -> Void) {
         guard let url = endpoint.buildUrl(for: config) else {
             return handler(.failure(MDBProviderError.invalidURL))
         }

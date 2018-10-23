@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Endpoint where T == Response<Movie> {
+public extension Endpoint where T == Response<Movie> {
     static func searchMovie(query: String, year: Int? = nil, page: Int? = nil,
                             region: String? = nil, language: String? = nil) -> Endpoint {
         var queries = [URLQueryItem(name: "query", value: query),]        

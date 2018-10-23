@@ -9,9 +9,9 @@
 import Foundation
 
 public struct Response<T: Codable>: Codable {
-    let page: Int
-    let results: [T]
-    let totalResults, totalPages: Int
+    public let page: Int
+    public let results: [T]
+    public let totalResults, totalPages: Int
     
     enum CodingKeys: String, CodingKey {
         case page, results

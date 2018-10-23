@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Endpoint where T == MovieDetails {
+public extension Endpoint where T == MovieDetails {
     static func getMovie(id: Int, language: String? = nil) -> Endpoint {
         var queries = [URLQueryItem]()
         if let language = language { queries.append(URLQueryItem(name: "language", value: language)) }
