@@ -11,24 +11,24 @@ import Foundation
 import Foundation
 
 public struct MovieDetails: Codable {
-    let adult: Bool
-    let belongsToCollection: BelongsToCollection?
-    let budget: Int
-    let genres: [Genre]
-    let id: Int
-    let originalLanguage, originalTitle: String
-    let popularity: Double
-    let productionCompanies: [ProductionCompany]
-    let productionCountries: [ProductionCountry]
-    let releaseDate: String
-    let revenue: Int
-    let spokenLanguages: [SpokenLanguage]
-    let status, title: String
-    let video: Bool
-    let voteAverage: Double
-    let voteCount: Int
-    let backdropPath, homepage, imdbID, overview, posterPath, tagline: String?
-    let runtime: Int?
+    public let adult: Bool
+    public let belongsToCollection: BelongsToCollection?
+    public let budget: Int
+    public let genres: [Genre]
+    public let id: Int
+    public let originalLanguage, originalTitle: String
+    public let popularity: Double
+    public let productionCompanies: [ProductionCompany]
+    public let productionCountries: [ProductionCountry]
+    public let releaseDate: String
+    public let revenue: Int
+    public let spokenLanguages: [SpokenLanguage]
+    public let status, title: String
+    public let video: Bool
+    public let voteAverage: Double
+    public let voteCount: Int
+    public let backdropPath, homepage, imdbID, overview, posterPath, tagline: String?
+    public let runtime: Int?
     
     enum CodingKeys: String, CodingKey {
         case adult
@@ -51,9 +51,9 @@ public struct MovieDetails: Codable {
     }
 }
 
-struct BelongsToCollection: Codable {
-    let id: Int
-    let name, posterPath, backdropPath: String
+public struct BelongsToCollection: Codable {
+    public let id: Int
+    public let name, posterPath, backdropPath: String
     
     enum CodingKeys: String, CodingKey {
         case id, name
@@ -62,15 +62,15 @@ struct BelongsToCollection: Codable {
     }
 }
 
-struct Genre: Codable {
-    let id: Int
-    let name: String
+public struct Genre: Codable {
+    public let id: Int
+    public let name: String
 }
 
-struct ProductionCompany: Codable {
-    let id: Int
-    let logoPath: String?
-    let name, originCountry: String
+public struct ProductionCompany: Codable {
+    public let id: Int
+    public let logoPath: String?
+    public let name, originCountry: String
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -80,8 +80,8 @@ struct ProductionCompany: Codable {
     }
 }
 
-struct ProductionCountry: Codable {
-    let iso3166_1, name: String
+public struct ProductionCountry: Codable {
+    public let iso3166_1, name: String
     
     enum CodingKeys: String, CodingKey {
         case iso3166_1 = "iso_3166_1"
@@ -89,8 +89,8 @@ struct ProductionCountry: Codable {
     }
 }
 
-struct SpokenLanguage: Codable {
-    let iso639_1, name: String
+public struct SpokenLanguage: Codable {
+    public let iso639_1, name: String
     
     enum CodingKeys: String, CodingKey {
         case iso639_1 = "iso_639_1"
