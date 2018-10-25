@@ -9,14 +9,10 @@
 import Foundation
 
 protocol HasLocation {
-    var locationService: ILocationService { get }
-}
-
-protocol ILocationService {
     var currentLocation: String { get }
 }
 
-class LocationService: ILocationService {
+class LocationService: HasLocation {
     var currentLocation: String {
         return Locale.current.regionCode ?? "US"
     }

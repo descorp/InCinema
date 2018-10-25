@@ -23,6 +23,9 @@
 		40F82188217D161D00B55CDF /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F82187217D161D00B55CDF /* Movie.swift */; };
 		40F8218A217D176E00B55CDF /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40F82189217D176E00B55CDF /* Response.swift */; };
 		40F8226C217E85E900B55CDF /* *.themoviedb.org.cer in Resources */ = {isa = PBXBuildFile; fileRef = 40F8226B217E85E900B55CDF /* *.themoviedb.org.cer */; };
+		40FD56CE2181FB77007BACD7 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FD56CD2181FB77007BACD7 /* ImageLoader.swift */; };
+		40FD56D021824F58007BACD7 /* EndpointUrlBuilderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FD56CF21824F58007BACD7 /* EndpointUrlBuilderTest.swift */; };
+		40FD56D221825D32007BACD7 /* *.tmdb.org.cer in Resources */ = {isa = PBXBuildFile; fileRef = 40FD56D121825D32007BACD7 /* *.tmdb.org.cer */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +58,9 @@
 		40F82187217D161D00B55CDF /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		40F82189217D176E00B55CDF /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		40F8226B217E85E900B55CDF /* *.themoviedb.org.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = "*.themoviedb.org.cer"; sourceTree = "<group>"; };
+		40FD56CD2181FB77007BACD7 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
+		40FD56CF21824F58007BACD7 /* EndpointUrlBuilderTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointUrlBuilderTest.swift; sourceTree = "<group>"; };
+		40FD56D121825D32007BACD7 /* *.tmdb.org.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = "*.tmdb.org.cer"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +119,7 @@
 			children = (
 				40EC96F8217BC24F009AE660 /* MDBProviderTests.swift */,
 				40EC96FA217BC24F009AE660 /* Info.plist */,
+				40FD56CF21824F58007BACD7 /* EndpointUrlBuilderTest.swift */,
 			);
 			path = MDBProviderTests;
 			sourceTree = "<group>";
@@ -122,6 +129,7 @@
 			children = (
 				40EC9704217BC40D009AE660 /* Endpoint.swift */,
 				40EC970A217BC4AE009AE660 /* Movies */,
+				40FD56CC2181FB53007BACD7 /* Images */,
 			);
 			path = Endpoints;
 			sourceTree = "<group>";
@@ -159,10 +167,19 @@
 		40F82182217D0F1B00B55CDF /* Meta */ = {
 			isa = PBXGroup;
 			children = (
+				40FD56D121825D32007BACD7 /* *.tmdb.org.cer */,
 				40F8226B217E85E900B55CDF /* *.themoviedb.org.cer */,
 				40EC96ED217BC24E009AE660 /* MDBProvider.h */,
 			);
 			path = Meta;
+			sourceTree = "<group>";
+		};
+		40FD56CC2181FB53007BACD7 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				40FD56CD2181FB77007BACD7 /* ImageLoader.swift */,
+			);
+			path = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,6 +275,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				40F82184217D0F3C00B55CDF /* config.plist in Resources */,
+				40FD56D221825D32007BACD7 /* *.tmdb.org.cer in Resources */,
 				40F8226C217E85E900B55CDF /* *.themoviedb.org.cer in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -278,6 +296,7 @@
 			files = (
 				40F8217A217CF30600B55CDF /* MDBProvider.swift in Sources */,
 				40F8217D217D061800B55CDF /* SecureSeeeion.swift in Sources */,
+				40FD56CE2181FB77007BACD7 /* ImageLoader.swift in Sources */,
 				40EC970C217BC4E9009AE660 /* Search.swift in Sources */,
 				40A89BAB217FB8210024948F /* GetMovie.swift in Sources */,
 				40F8218A217D176E00B55CDF /* Response.swift in Sources */,
@@ -294,6 +313,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				40FD56D021824F58007BACD7 /* EndpointUrlBuilderTest.swift in Sources */,
 				40EC96F9217BC24F009AE660 /* MDBProviderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

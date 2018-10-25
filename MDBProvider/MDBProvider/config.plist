@@ -4,10 +4,18 @@
 <dict>
 	<key>Common</key>
 	<dict>
-		<key>BaseApiUrl</key>
-		<string>api.themoviedb.org</string>
-		<key>Version</key>
-		<integer>3</integer>
+		<key>ImageApi</key>
+		<dict>
+			<key>Url</key>
+			<string>image.tmdb.org</string>
+		</dict>
+		<key>BaseApi</key>
+		<dict>
+			<key>Url</key>
+			<string>api.themoviedb.org</string>
+			<key>Version</key>
+			<integer>3</integer>
+		</dict>
 	</dict>
 </dict>
 </plist>

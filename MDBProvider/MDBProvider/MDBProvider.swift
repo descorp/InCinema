@@ -17,6 +17,7 @@ public enum MDBProviderError: Error {
     case invalidURL
     case network(Error?)
     case parsingError
+    case invalidImage
 }
 
 final public class MDBProvider {

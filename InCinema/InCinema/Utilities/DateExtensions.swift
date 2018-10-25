@@ -18,8 +18,14 @@ extension Date {
         return formatter.string(from: self)
     }
     
-    func dateAgo(week: Int) -> Date {
-        return Calendar.current.date(byAdding: Calendar.Component.day , value: 7 * week, to: self)!
+    init?(format: String, value: String) {
+        let formatter = DateFormatter()
+        formatter.dateFormat = format
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        if let date = formatter.date(from: value) {
+            self = date
+        } else {
+            return nil
+        }
     }
-    
 }

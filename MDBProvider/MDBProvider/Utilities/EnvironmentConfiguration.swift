@@ -8,13 +8,18 @@
 
 import Foundation
 
+internal struct ApiConfig {
+    let url: String
+    let version: Int?
+}
+
 internal final class EnvironmentConfiguration {
     
     static let current = EnvironmentConfiguration()
     
-    var config: [AnyHashable : Any]
+    var config: [String : Any]
     
-    init(dictionary: [AnyHashable : Any]) {
+    init(dictionary: [String : Any]) {
         config = dictionary
     }
     
@@ -28,7 +33,7 @@ internal final class EnvironmentConfiguration {
             dict = commonConfig
         }
         
-        self.init(dictionary: dict)
+        self.init(dictionary: dict as! [String : Any])
     }
 }
 
@@ -38,11 +43,30 @@ extension EnvironmentConfiguration {
         get { return config["AppKey"] as! String }
     }
     
-    var baseApiUrl : String {
-        return config["BaseApiUrl"] as! String
+    func apiUrl(_ baseUrlType: BaseUrlType) -> ApiConfig {
+        var apiName: String
+        switch baseUrlType {
+        case .image:
+            apiName = "ImageApi"
+        case .data:
+            apiName = "BaseApi"
+        }
+        
+        guard
+            let dictionary = config[apiName] as? NSDictionary
+        else { preconditionFailure("Configuration file is invalid") }
+        
+        return ApiConfig(from: dictionary)
     }
-    
-    var version : Int {
-        return config["Version"] as! Int
+}
+
+extension ApiConfig {
+    init(from dictionary: NSDictionary) {
+        guard
+            let url = dictionary["Url"] as? String
+        else { preconditionFailure("Configuration file is invalid") }
+        
+        let version = dictionary["Version"] as? Int
+        self = ApiConfig(url: url, version: version)
     }
 }

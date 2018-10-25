@@ -14,6 +14,7 @@ public extension Endpoint where T == MovieDetails {
         if let language = language { queries.append(URLQueryItem(name: "language", value: language)) }
         
         return Endpoint(
+            host: .data,
             path: "/movie/\(id)",
             queryItems: queries,
             parse: T.decode

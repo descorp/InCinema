@@ -9,9 +9,23 @@
 import Foundation
 import UIKit
 
-struct AppDependency: HasMDB, HasLocation {
+struct AppDependency: HasMDB, HasLocation, HasLocale, HasImageLoader {
+    func load(path: String, than handler: @escaping (UIImage?, Error?) -> Void) {
+        imageLoader.load(path: path, than: handler)
+    }
+    
+    var currentLocation: String {
+        return locationService.currentLocation
+    }
+    
+    var currentLocale: String {
+        return localeService.currentLocale
+    }
+    
     let moviesService: IMoviesProvider
-    let locationService: ILocationService
+    let locationService: LocationService
+    let localeService: LocaleService
+    let imageLoader: ImageLoader
 }
 
 class AppCoordinator: Coordinator {
@@ -23,17 +37,23 @@ class AppCoordinator: Coordinator {
     // MARK: - Coordinator
     init(window: UIWindow) {
         self.window = window
-        self.dependency = AppDependency(moviesService: MoviesService(apiKey: ""), locationService: LocationService())
-        super.init(withViewController: UINavigationController())
+        let config = EnvironmentConfiguration()
+        self.dependency = AppDependency(moviesService: MoviesService(apiKey: config.appKey),
+                                        locationService: LocationService(),
+                                        localeService: LocaleService(),
+                                        imageLoader: ImageLoader())
+        super.init(withRootController: UINavigationController())
         
         window.rootViewController = self.rootViewController
         window.makeKeyAndVisible()
     }
     
     override func start() {
-        let rootCoordinator = BitcoinIndexCoordinator(withViewController: self.rootViewController, parentCoordinator: self, dependency: dependency)
-        rootCoordinator.start()
+        let rootCoordinator = NowInCinemaCoodrinator(withViewController: self.rootViewController,
+                                                     parentCoordinator: self,
+                                                     dependency: dependency)
         self.childCoordinators.append(rootCoordinator)
+        rootCoordinator.start()
     }
     
     override func finish() {
