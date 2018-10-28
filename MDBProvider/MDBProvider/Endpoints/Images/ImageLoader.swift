@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum ImageType: String {
+public enum ImageSize: String {
     case w92 = "w92"
     case w154 = "w154"
     case w185 = "w185"
@@ -20,13 +20,25 @@ public enum ImageType: String {
 
 
 public extension Endpoint where T == UIImage {
-    static func loadImage(path: String, type: ImageType = .original) -> Endpoint {
+    static func loadImage(path: String, size: ImageSize = .original) -> Endpoint {
         let finalPath = path.hasPrefix("/") ? "\(path.dropFirst())" : path
         return Endpoint(
             host: .image,
-            path: "/t/p/\(type)/\(finalPath)",
+            path: "/t/p/\(size)/\(finalPath)",
             queryItems: [],
             parse: UIImage.convert
+        )
+    }
+}
+
+public extension Endpoint where T == Data {
+    static func loadImageData(path: String, size: ImageSize = .original) -> Endpoint {
+        let finalPath = path.hasPrefix("/") ? "\(path.dropFirst())" : path
+        return Endpoint(
+            host: .image,
+            path: "/t/p/\(size)/\(finalPath)",
+            queryItems: [],
+            parse: { $0 }
         )
     }
 }

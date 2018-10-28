@@ -44,7 +44,7 @@ class EndpointUrlBuilderTests: XCTestCase {
     }
     
     func testImageEndpoint() {
-        let endpoint = Endpoint.loadImage(path: "/kqjL17yufvn9OVLyXYpvtyrFfak.jpg", type: .w500)
+        let endpoint = Endpoint.loadImage(path: "/kqjL17yufvn9OVLyXYpvtyrFfak.jpg", size: .w500)
         let sut = endpoint.buildUrl(for: config)
         
         XCTAssertNotNil(sut)

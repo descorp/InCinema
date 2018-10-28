@@ -109,4 +109,22 @@ class MDBProviderTests: XCTestCase {
         
         waitForExpectations(timeout: 5, handler: nil)
     }
+    
+    func testLoadImageDataSuccessfull() {
+        let sut = MDBProvider(apiKey: apiKey)
+        let successExpectation = expectation(description: "Success")
+        sut.request(Endpoint.loadImageData(path: imagePath)) { (result) in
+            switch result {
+            case let .success(responce):
+                XCTAssertNotNil(responce)
+                XCTAssertTrue(responce.count > 0)
+                successExpectation.fulfill()
+            case let .failure(error):
+                print(error)
+                XCTFail()
+            }
+        }
+        
+        waitForExpectations(timeout: 5, handler: nil)
+    }
 }
