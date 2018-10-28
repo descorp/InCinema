@@ -11,7 +11,7 @@ import UIKit
 import MDBProvider
 
 class NowInCinemaCoodrinator: Coordinator, MovieCollectionViewModelCoordinatorDelegate {
-    typealias Dependency = HasLocation & HasMDB & HasLocale & HasImageLoader
+    typealias Dependency = HasLocation & HasMDB & HasLocale & HasImageService
     
     let dependency: Dependency
     
@@ -29,9 +29,10 @@ class NowInCinemaCoodrinator: Coordinator, MovieCollectionViewModelCoordinatorDe
         
         let model = InCinemaMovieCollectionModel(dependency: dependency)
         let viewModel = InCinemaMovieCollectionViewModel(model: model,
-                                                         dependency: dependency,
-                                                         coordinatorDelegate: self)
+                                                         dependency: dependency)
+        viewModel.coordinatorDelegate = self
         let viewController = MovieCollectionView(viewModel: viewModel)
+        viewModel.viewDelegate = viewController
         navigationController.setViewControllers([viewController], animated: false)
     }
     

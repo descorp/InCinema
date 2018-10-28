@@ -12,7 +12,7 @@ protocol ViewModel: class {
 }
 
 protocol ViewDelegate: class {
-    func itemsDidChange(viewModel: ViewModel)
+    func itemsDidChange()
 }
 
 protocol CoordinatorDelegate: class {

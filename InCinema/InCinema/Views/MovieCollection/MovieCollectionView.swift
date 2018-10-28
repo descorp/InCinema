@@ -9,9 +9,11 @@
 import Foundation
 import UIKit
 
-class MovieCollectionView: UIViewController {
+class MovieCollectionView: UIViewController, ViewDelegate {
     
-    var viewModel: MovieCollectionViewModel
+    private var viewModel: MovieCollectionViewModel
+    
+    private var collection: UICollectionView!
     
     init(viewModel: MovieCollectionViewModel) {
         self.viewModel = viewModel
@@ -22,4 +24,14 @@ class MovieCollectionView: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewDidLoad() {
+        collection = UICollectionView(frame: CGRect.zero)
+        collection.fill(container: self.view)
+    }
+    
+    func itemsDidChange() {
+        DispatchQueue.main.async {
+            // TODO: update view
+        }
+    }
 }

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class MovieDetailsView: UIViewController {
+class MovieDetailsView: UIViewController, ViewDelegate {
     
     var viewModel: MovieViewModel
     
@@ -20,6 +20,12 @@ class MovieDetailsView: UIViewController {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func itemsDidChange() {
+        DispatchQueue.main.async {
+            // TODO: update view
+        }
     }
     
 }

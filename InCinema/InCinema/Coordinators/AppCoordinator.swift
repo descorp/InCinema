@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-struct AppDependency: HasMDB, HasLocation, HasLocale, HasImageLoader {
+struct AppDependency: HasMDB, HasLocation, HasLocale, HasImageService {
     func load(path: String, than handler: @escaping (UIImage?, Error?) -> Void) {
         imageLoader.load(path: path, than: handler)
     }
@@ -25,7 +25,7 @@ struct AppDependency: HasMDB, HasLocation, HasLocale, HasImageLoader {
     let moviesService: IMoviesProvider
     let locationService: LocationService
     let localeService: LocaleService
-    let imageLoader: ImageLoader
+    let imageLoader: ImageService
 }
 
 class AppCoordinator: Coordinator {
@@ -38,10 +38,11 @@ class AppCoordinator: Coordinator {
     init(window: UIWindow) {
         self.window = window
         let config = EnvironmentConfiguration()
-        self.dependency = AppDependency(moviesService: MoviesService(apiKey: config.appKey),
+        let mdbService: MoviesService = MoviesService(apiKey: config.appKey)
+        self.dependency = AppDependency(moviesService: mdbService,
                                         locationService: LocationService(),
                                         localeService: LocaleService(),
-                                        imageLoader: ImageLoader())
+                                        imageLoader: ImageService(imageLoader: mdbService))
         super.init(withRootController: UINavigationController())
         
         window.rootViewController = self.rootViewController

@@ -15,11 +15,16 @@ protocol IMoviesProvider {
     func search(query: String, language: String, than handler: @escaping ([Movie]?, Error?) -> Void)
 }
 
+protocol HasImageLoader {
+    func loadImage(path: String, than handler: @escaping (Data?, Error?) -> Void)
+}
+
 protocol HasMDB {
     var moviesService: IMoviesProvider { get }
 }
 
-class MoviesService: IMoviesProvider {
+class MoviesService: IMoviesProvider, HasImageLoader {
+
     private let provider: MDBProvider
     
     init(apiKey: String) {
@@ -59,5 +64,15 @@ class MoviesService: IMoviesProvider {
         }
     }
 
+    func loadImage(path: String, than handler: @escaping (Data?, Error?) -> Void) {
+        self.provider.request(Endpoint.loadImageData(path: path, size: .w780)) { (result) in
+            switch result {
+            case .success(let responce):
+                handler(responce, nil)
+            case .failure(let error):
+                handler(nil, error)
+            }
+        }
+    }
 }
 

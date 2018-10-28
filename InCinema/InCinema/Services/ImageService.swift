@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-protocol HasImageLoader {
+protocol HasImageService {
     func load(path: String, than handler: @escaping (UIImage?, Error?) -> Void)
 }
 
@@ -17,13 +17,15 @@ enum ImageLoaderError: Error {
     case emptyPath
 }
 
-class ImageLoader: HasImageLoader {
+class ImageService: HasImageService {
     
+    private let imageLoader: HasImageLoader
     private let cache: NSCache<NSString, UIImage>
     
-    init() {
+    init(imageLoader: HasImageLoader) {
         self.cache = NSCache<NSString, UIImage>()
         self.cache.countLimit = 100
+        self.imageLoader = imageLoader
     }
     
     func load(path: String, than handler: @escaping (UIImage?, Error?) -> Void) {
@@ -32,13 +34,12 @@ class ImageLoader: HasImageLoader {
             return
         }
         
-        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+        self.imageLoader.loadImage(path: path) { [weak self] (data, error) in
             guard
-                let url = URL(string: path),
-                let data = try? Data(contentsOf: url),
+                let data = data,
                 let image = UIImage(data: data)
             else {
-                handler(nil, ImageLoaderError.emptyPath)
+                handler(nil, error)
                 return
             }
             

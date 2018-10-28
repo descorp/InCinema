@@ -10,30 +10,34 @@ import Foundation
 import MDBProvider
 
 protocol MovieViewModel: ViewModel {
+    
+    var viewDelegate: ViewDelegate? { get set }
+    
     var backdropImage: UIImage? { get }
     var title: String { get }
     var originalTitle: String? { get }
     var plotDescription: String { get }
     var year: String { get }
     var rate: String { get }
+    
+    func loadImage()
 }
 
 class InCinemaMovieViewModel: MovieViewModel {
     
-    private var viewDelegate: ViewDelegate?
-    private var coordinatorDelegate: CoordinatorDelegate?
-    private var model: MovieModel
+    weak var viewDelegate: ViewDelegate?
     
-    init(model: MovieModel,
-         viewDelegate: ViewDelegate? = nil,
-         coordinatorDelegate: CoordinatorDelegate? = nil) {
+    private var model: MovieModel
+    private var image: UIImage?
+    
+    init(model: MovieModel) {
         self.model = model
-        self.viewDelegate = viewDelegate
-        self.coordinatorDelegate = coordinatorDelegate
     }
     
+    // MARK: Movie ViewModel
+    
     var backdropImage: UIImage? {
-        return nil
+        return image
     }
     
     private var movie: Movie {
@@ -58,5 +62,17 @@ class InCinemaMovieViewModel: MovieViewModel {
     
     var rate: String {
         return "\(movie.voteAverage) / \(movie.voteCount)"
+    }
+    
+    func loadImage() {
+        model.loadImage { [weak self] (image, error) in
+            guard
+                let strongSelf = self,
+                let image = image
+            else { return }
+            
+            strongSelf.image = image
+            strongSelf.viewDelegate?.itemsDidChange()
+        }
     }
 }

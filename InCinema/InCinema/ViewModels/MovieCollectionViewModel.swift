@@ -26,28 +26,26 @@ protocol MovieCollectionViewModel: ViewModel {
 }
 
 class InCinemaMovieCollectionViewModel: MovieCollectionViewModel {
-    typealias Dependency = HasLocation & HasMDB & HasImageLoader & HasLocale
+    typealias Dependency = HasLocation & HasMDB & HasImageService & HasLocale
     
     private let dependency: Dependency
     private var model: MovieCollectionModel
-    private var collectionCache: [Movie]
+    private var collectionCache = [Movie]()
     private var page = 1
     
-    var viewDelegate: ViewDelegate?
-    var coordinatorDelegate: MovieCollectionViewModelCoordinatorDelegate?
-    var collection = [MovieViewModel]()
-    var scrollPosition: Float = 0.0
+    weak var viewDelegate: ViewDelegate?
+    weak var coordinatorDelegate: MovieCollectionViewModelCoordinatorDelegate?
     
     init(model: MovieCollectionModel,
-         dependency: Dependency,
-         viewDelegate: ViewDelegate? = nil,
-         coordinatorDelegate: MovieCollectionViewModelCoordinatorDelegate? = nil) {
+         dependency: Dependency) {
         self.model = model
         self.dependency = dependency
-        self.viewDelegate = viewDelegate
-        self.coordinatorDelegate = coordinatorDelegate
-        self.collectionCache = []
     }
+    
+    // MARK: MovieCollection ViewModel
+    
+    var collection = [MovieViewModel]()
+    var scrollPosition: Float = 0.0
     
     func loadMore() {
         let region = dependency.currentLocation
@@ -60,7 +58,7 @@ class InCinemaMovieCollectionViewModel: MovieCollectionViewModel {
                 strongSelf.page += 1
                 strongSelf.collectionCache = strongSelf.collectionCache + data
                 strongSelf.collection = strongSelf.collectionCache.map(strongSelf.toViewModel)
-                strongSelf.viewDelegate?.itemsDidChange(viewModel: strongSelf)
+                strongSelf.viewDelegate?.itemsDidChange()
                 return
             }
             
@@ -77,7 +75,7 @@ class InCinemaMovieCollectionViewModel: MovieCollectionViewModel {
             if let data = data {
                 strongSelf.page = 1
                 strongSelf.collection = data.map(strongSelf.toViewModel)
-                strongSelf.viewDelegate?.itemsDidChange(viewModel: strongSelf)
+                strongSelf.viewDelegate?.itemsDidChange()
                 return
             }
             
@@ -87,7 +85,7 @@ class InCinemaMovieCollectionViewModel: MovieCollectionViewModel {
     
     func stopSearch() {
         self.collection = self.collectionCache.map(toViewModel)
-        self.viewDelegate?.itemsDidChange(viewModel: self)
+        self.viewDelegate?.itemsDidChange()
     }
     
     func updateScrollPosition(_ position: Float) {

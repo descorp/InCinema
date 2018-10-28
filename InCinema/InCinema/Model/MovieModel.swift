@@ -16,10 +16,11 @@ protocol MovieModel {
 }
 
 class InCinemaMovieModel: MovieModel {
-    typealias Dependency = HasMDB & HasLocale & HasImageLoader
+    typealias Dependency = HasMDB & HasLocale & HasImageService
     
     private let dependency: Dependency
-    let movie: Movie
+    
+    var movie: Movie
     
     init(movie: Movie, dependency: Dependency) {
         self.dependency = dependency
