@@ -12,7 +12,7 @@ import UIKit
 class MovieCollectionView: UIViewController, ViewDelegate {
     
     private var viewModel: MovieCollectionViewModel
-    private var collection: UICollectionView!
+    private var collectionView: UICollectionView!
     private var collectionHandler: CollectionHandler?
     
     init(viewModel: MovieCollectionViewModel) {
@@ -35,20 +35,20 @@ class MovieCollectionView: UIViewController, ViewDelegate {
     }()
     
     override func viewDidLoad() {
-        self.navigationController?.isNavigationBarHidden = true
+        collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
+        self.view.addSubview(collectionView)
+        collectionView.fill(container: self.view)
         
-        collection = UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
-        self.view.addSubview(collection)
-        collection.fill(container: self.view)
+        self.navigationController?.isNavigationBarHidden = true
+        self.collectionHandler = CollectionHandler(collectionView: self.collectionView)
+        self.collectionHandler?.scrollDelegate = self
         viewModel.loadMore()
     }
     
     func itemsDidChange() {
         DispatchQueue.main.sync {
-            self.collectionHandler = CollectionHandler(collectionView: self.collection,
-                                                       collection: self.viewModel.collection)
-            self.collectionHandler?.scrollDelegate = self
-            self.collection.reloadData()
+            self.collectionHandler?.collection = viewModel.collection
+            self.collectionView.reloadData()
         }
     }
 }

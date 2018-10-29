@@ -24,9 +24,15 @@ class MovieCollectionCell: UICollectionViewCell, ViewDelegate {
         self.layout()
     }
     
-    func itemsDidChange() {
-        DispatchQueue.main.async { [weak self] in
-            self?.posterImage.image = self?.viewModel?.posterImage
+    func itemsDidChange() {        
+        DispatchQueue.main.async {
+            self.contentView.alpha = 0
+            UIView.animateKeyframes(withDuration: 2, delay: 0,
+                                    options: UIView.KeyframeAnimationOptions.calculationModeCubicPaced,
+                                    animations: { [weak self] in
+                                        self?.contentView.alpha = 1
+                                        self?.posterImage.image = self?.viewModel?.posterImage
+            }) { _ in }
         }
     }
     

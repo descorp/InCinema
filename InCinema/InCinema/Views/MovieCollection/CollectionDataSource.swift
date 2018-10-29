@@ -16,11 +16,12 @@ protocol ScrollingToBottomDelegate: class {
 class CollectionHandler: NSObject, UICollectionViewDataSource, UICollectionViewDelegate {
     
     private let cellId = "MovieCollectionCell"
-    private let collection: [MovieViewModel]
+    
+    var collection: [MovieViewModel]
     
     public weak var scrollDelegate: ScrollingToBottomDelegate?
     
-    init(collectionView: UICollectionView, collection: [MovieViewModel]) {
+    init(collectionView: UICollectionView, collection: [MovieViewModel] = []) {
         self.collection = collection
         super.init()
         collectionView.delegate = self

@@ -32,6 +32,7 @@ class InCinemaMovieCollectionViewModel: MovieCollectionViewModel {
     private var model: MovieCollectionModel
     private var collectionCache = [Movie]()
     private var page = 1
+    private var lastUpdate: Date?
     
     weak var viewDelegate: ViewDelegate?
     weak var coordinatorDelegate: MovieCollectionViewModelCoordinatorDelegate?
@@ -48,6 +49,10 @@ class InCinemaMovieCollectionViewModel: MovieCollectionViewModel {
     var scrollPosition: Float = 0.0
     
     func loadMore() {
+        guard lastUpdate ?? Date(timeIntervalSince1970: 0) < Date(timeIntervalSinceNow: -10)
+            else { return }
+        
+        self.lastUpdate = Date()
         let region = dependency.currentLocation
         self.model.load(page: page, region: region) { [weak self] (data, error) in
             guard
