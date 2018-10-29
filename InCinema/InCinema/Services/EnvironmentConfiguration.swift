@@ -40,7 +40,7 @@ internal final class EnvironmentConfiguration {
 
 extension EnvironmentConfiguration: HasConfig {
     var appKey: String {
-        set { config["AppKey"] = newValue }
-        get { return config["AppKey"] as! String }
+        set { config["ApiKey"] = newValue }
+        get { return config["ApiKey"] as! String }
     }
 }

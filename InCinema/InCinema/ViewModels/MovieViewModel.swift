@@ -14,13 +14,14 @@ protocol MovieViewModel: ViewModel {
     var viewDelegate: ViewDelegate? { get set }
     
     var backdropImage: UIImage? { get }
+    var posterImage: UIImage? { get }
     var title: String { get }
     var originalTitle: String? { get }
     var plotDescription: String { get }
     var year: String { get }
     var rate: String { get }
     
-    func loadImage()
+    func loadImage(_ type: ImageType)
 }
 
 class InCinemaMovieViewModel: MovieViewModel {
@@ -28,7 +29,6 @@ class InCinemaMovieViewModel: MovieViewModel {
     weak var viewDelegate: ViewDelegate?
     
     private var model: MovieModel
-    private var image: UIImage?
     
     init(model: MovieModel) {
         self.model = model
@@ -36,9 +36,9 @@ class InCinemaMovieViewModel: MovieViewModel {
     
     // MARK: Movie ViewModel
     
-    var backdropImage: UIImage? {
-        return image
-    }
+    var backdropImage: UIImage?
+    
+    var posterImage: UIImage?
     
     private var movie: Movie {
         return model.movie
@@ -64,14 +64,22 @@ class InCinemaMovieViewModel: MovieViewModel {
         return "\(movie.voteAverage) / \(movie.voteCount)"
     }
     
-    func loadImage() {
-        model.loadImage { [weak self] (image, error) in
+    func loadImage(_ type: ImageType) {
+        model.loadImage(type) { [weak self] (image, error) in
             guard
                 let strongSelf = self,
                 let image = image
             else { return }
             
-            strongSelf.image = image
+            switch type {
+                
+            case .poster:
+                strongSelf.posterImage = image
+                break
+            case .backdrop:
+                strongSelf.backdropImage = image
+                break
+            }
             strongSelf.viewDelegate?.itemsDidChange()
         }
     }

@@ -11,8 +11,13 @@ import UIKit
 
 class MovieCollectionCell: UICollectionViewCell, ViewDelegate {
     
-    private var backdropImage: UIImageView!
+    private var posterImage: UIImageView!
     private weak var viewModel: MovieViewModel?
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.layout()
+    }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -20,22 +25,25 @@ class MovieCollectionCell: UICollectionViewCell, ViewDelegate {
     }
     
     func itemsDidChange() {
-        backdropImage.image = viewModel?.backdropImage
+        DispatchQueue.main.async { [weak self] in
+            self?.posterImage.image = self?.viewModel?.posterImage
+        }
     }
     
     func bind(viewModel: MovieViewModel) {
         self.viewModel = viewModel
         viewModel.viewDelegate = self
     
-        if viewModel.backdropImage == nil {
-            viewModel.loadImage()
+        if viewModel.posterImage == nil {
+            viewModel.loadImage(.poster)
         } else {
             itemsDidChange()
         }
     }
  
     private func layout() {
-        backdropImage = UIImageView(frame: CGRect.zero)
-        backdropImage.fill(container: self.contentView)
+        posterImage = UIImageView(frame: CGRect.zero)
+        self.contentView.addSubview(posterImage)
+        posterImage.fill(container: self.contentView)
     }
 }

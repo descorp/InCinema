@@ -12,7 +12,16 @@ import MDBProvider
 protocol MovieModel {
     var movie: Movie { get }
     func loadDetails(than handler: @escaping (MovieDetails?, Error?) -> Void)
-    func loadImage(than handler: @escaping (UIImage?, Error?) -> Void)
+    func loadImage(_ type: ImageType, than handler: @escaping (UIImage?, Error?) -> Void)
+}
+
+enum ImageType {
+    case poster
+    case backdrop
+}
+
+enum MovieImageError: Error {
+    case imageNotAvailable
 }
 
 class InCinemaMovieModel: MovieModel {
@@ -32,14 +41,22 @@ class InCinemaMovieModel: MovieModel {
         self.dependency.moviesService.getMovie(id: movie.id, language: locale, than: handler)
     }
     
-    func loadImage(than handler: @escaping (UIImage?, Error?) -> Void) {
+    func loadImage(_ type: ImageType, than handler: @escaping (UIImage?, Error?) -> Void) {
+        let path: String?
+        switch type {
+        case .poster:
+            path = movie.posterPath
+        case .backdrop:
+            path = movie.backdropPath
+        }
+        
         guard
-            let path = movie.backdropPath
+            let moviePath = path
         else {
-            handler(nil, nil)
+            handler(nil, MovieImageError.imageNotAvailable)
             return
         }
         
-        self.dependency.load(path: path, than: handler)
+        self.dependency.load(path: moviePath, than: handler)
     }
 }
