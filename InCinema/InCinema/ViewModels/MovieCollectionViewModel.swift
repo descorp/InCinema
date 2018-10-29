@@ -10,7 +10,7 @@ import Foundation
 import MDBProvider
 
 protocol MovieCollectionViewModelCoordinatorDelegate: CoordinatorDelegate {
-    func viewModelDidSelectMovie(_ viewModel: ViewModel, movie: Movie)
+    func viewModelDidSelectMovie(_ viewModel: ViewModel, item: MovieViewModel)
 }
 
 protocol MovieCollectionViewModel: ViewModel {
@@ -22,7 +22,7 @@ protocol MovieCollectionViewModel: ViewModel {
     func search(query: String)
     func stopSearch()
     func updateScrollPosition(_ position: Float)
-    func selectMovie(movie: Movie)
+    func selectMovie(item: MovieViewModel)
 }
 
 class InCinemaMovieCollectionViewModel: MovieCollectionViewModel {
@@ -32,7 +32,8 @@ class InCinemaMovieCollectionViewModel: MovieCollectionViewModel {
     private var model: MovieCollectionModel
     private var collectionCache = [Movie]()
     private var page = 1
-    private var lastUpdate: Date?
+    private var lastUpdate = Date(timeIntervalSince1970: 0)
+    private var updateTrashhold = 2
     
     weak var viewDelegate: ViewDelegate?
     weak var coordinatorDelegate: MovieCollectionViewModelCoordinatorDelegate?
@@ -49,7 +50,7 @@ class InCinemaMovieCollectionViewModel: MovieCollectionViewModel {
     var scrollPosition: Float = 0.0
     
     func loadMore() {
-        guard lastUpdate ?? Date(timeIntervalSince1970: 0) < Date(timeIntervalSinceNow: -10)
+        guard lastUpdate < Date(timeIntervalSinceNow: TimeInterval(-updateTrashhold))
             else { return }
         
         self.lastUpdate = Date()
@@ -97,8 +98,8 @@ class InCinemaMovieCollectionViewModel: MovieCollectionViewModel {
         self.scrollPosition = position
     }
     
-    func selectMovie(movie: Movie) {
-        self.coordinatorDelegate?.viewModelDidSelectMovie(self, movie: movie)
+    func selectMovie(item: MovieViewModel) {
+        self.coordinatorDelegate?.viewModelDidSelectMovie(self, item: item)
     }
     
     func toViewModel(movie: Movie) -> MovieViewModel {

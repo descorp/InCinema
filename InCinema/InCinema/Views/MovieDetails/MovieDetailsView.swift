@@ -11,6 +11,34 @@ import UIKit
 
 class MovieDetailsView: UIViewController, ViewDelegate {
     
+    private var titleLabel: UILabel!
+    private var backdropImage: UIImageView!
+    private var descriptionLabel: UILabel!
+    
+    internal var movieTitle: UILabel = {
+        let lable = UILabel()
+        lable.textColor = UIColor.white
+        lable.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        lable.translatesAutoresizingMaskIntoConstraints = false
+        lable.numberOfLines = 0
+        return lable
+    }()
+    
+    internal var movieDescription: UILabel = {
+        let lable = UILabel()
+        lable.textColor = UIColor.white
+        lable.font = UIFont.systemFont(ofSize: 16)
+        lable.translatesAutoresizingMaskIntoConstraints = false
+        lable.numberOfLines = 0
+        return lable
+    }()
+    
+    internal var movieBackdrop: UIImageView = {
+        let imageView = UIImageView(image: nil)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
     var viewModel: MovieViewModel
     
     init(viewModel: MovieViewModel) {
@@ -22,9 +50,44 @@ class MovieDetailsView: UIViewController, ViewDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewDidLoad() {
+        self.view.backgroundColor = UIColor.black
+        
+        self.titleLabel = movieTitle
+        self.backdropImage = movieBackdrop
+        self.descriptionLabel = movieDescription
+        
+        self.view.addSubview(titleLabel)
+        self.view.addSubview(backdropImage)
+        self.view.addSubview(descriptionLabel)
+        
+        let views: [String: UIView] = ["image": backdropImage, "title": titleLabel, "description": descriptionLabel]
+        let width = UIScreen.main.bounds.width
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[image(\(width * 0.56))]-[title]-[description]",
+                                                                options: [],
+                                                                metrics: nil,
+                                                                views: views))
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[image]-0-|",
+                                                                options: [],
+                                                                metrics: nil,
+                                                                views: views))
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[title]-0-|",
+                                                                options: [],
+                                                                metrics: nil,
+                                                                views: views))
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[description]-0-|",
+                                                                options: [],
+                                                                metrics: nil,
+                                                                views: views))
+        descriptionLabel.setContentHuggingPriority(UILayoutPriority.defaultLow, for: NSLayoutConstraint.Axis.vertical)
+        viewModel.loadImage(.backdrop)
+    }
+    
     func itemsDidChange() {
-        DispatchQueue.main.async {
-            // TODO: update view
+        DispatchQueue.main.async { [weak self] in
+            self?.backdropImage.image = self?.viewModel.backdropImage
+            self?.titleLabel.text = self?.viewModel.title
+            self?.descriptionLabel.text = self?.viewModel.plotDescription
         }
     }
     

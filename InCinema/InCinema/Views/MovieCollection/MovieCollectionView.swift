@@ -27,21 +27,25 @@ class MovieCollectionView: UIViewController, ViewDelegate {
     var flowLayout: UICollectionViewFlowLayout = {
         let flowLayout = UICollectionViewFlowLayout()
         let width = UIScreen.main.bounds.width
-        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 40, right: 0)
+        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         flowLayout.itemSize = CGSize(width: width / 2, height: 2 * width / 3)
         flowLayout.minimumInteritemSpacing = 0
         flowLayout.minimumLineSpacing = 0
+        flowLayout.headerReferenceSize = CGSize(width: width, height: 100)
+        flowLayout.footerReferenceSize = CGSize(width: width, height: 100)
         return flowLayout
     }()
     
     override func viewDidLoad() {
+        self.view.backgroundColor = UIColor.black
         collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
+        collectionView.allowsSelection = true
         self.view.addSubview(collectionView)
         collectionView.fill(container: self.view)
         
-        self.navigationController?.isNavigationBarHidden = true
         self.collectionHandler = CollectionHandler(collectionView: self.collectionView)
         self.collectionHandler?.scrollDelegate = self
+        self.collectionHandler?.selectionDelegate = self
         viewModel.loadMore()
     }
     
@@ -56,5 +60,11 @@ class MovieCollectionView: UIViewController, ViewDelegate {
 extension MovieCollectionView: ScrollingToBottomDelegate {
     func didScrollToBottom() {
         self.viewModel.loadMore()
+    }
+}
+
+extension MovieCollectionView: SelectionDelegate {
+    func didSelectItem(viewModel: MovieViewModel) {
+        self.viewModel.selectMovie(item: viewModel)
     }
 }

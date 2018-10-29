@@ -18,6 +18,5 @@ extension UIView {
         let vertical = NSLayoutConstraint.constraints(withVisualFormat: "V:|[view]|", options:[], metrics:nil, views: views)
         container.addConstraints(horizontal)
         container.addConstraints(vertical)
-    }
-    
+    }    
 }

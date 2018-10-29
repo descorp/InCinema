@@ -27,6 +27,10 @@ class NowInCinemaCoodrinator: Coordinator, MovieCollectionViewModelCoordinatorDe
             let navigationController =  (rootViewController as? UINavigationController)
         else { return }
         
+        navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController.navigationBar.shadowImage = UIImage()
+        navigationController.navigationBar.isTranslucent = true
+        
         let model = InCinemaMovieCollectionModel(dependency: dependency)
         let viewModel = InCinemaMovieCollectionViewModel(model: model,
                                                          dependency: dependency)
@@ -36,8 +40,12 @@ class NowInCinemaCoodrinator: Coordinator, MovieCollectionViewModelCoordinatorDe
         navigationController.setViewControllers([viewController], animated: false)
     }
     
-    func viewModelDidSelectMovie(_ viewModel: ViewModel, movie: Movie) {
-        // TODO: Start Details Coordinator
+    func viewModelDidSelectMovie(_ viewModel: ViewModel, item: MovieViewModel) {
+        let detailCoordinator = MovieDetailsCoordinator(viewModel: item,
+                                                        withViewController: rootViewController,
+                                                        andParentCoordinator: self)
+        self.addChildCoordinator(detailCoordinator)
+        detailCoordinator.start()
     }
     
     func viewModelDidThrowError(_ viewModel: ViewModel, error: Error?) {

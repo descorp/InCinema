@@ -24,11 +24,21 @@ class MovieDetailsCoordinator: Coordinator, CoordinatorDelegate {
         guard
             let navigationController =  (rootViewController as? UINavigationController)
         else { return }
+        
+        navigationController.isNavigationBarHidden = false
         let viewController = MovieDetailsView(viewModel: viewModel)
+        viewModel.viewDelegate = viewController
+        navigationController.hidesBarsOnTap = false
         navigationController.pushViewController(viewController, animated: true)
     }
     
     override func finish() {
+        guard
+            let navigationController =  (rootViewController as? UINavigationController)
+        else { return }
+        
+        navigationController.isNavigationBarHidden = false
+        navigationController.popViewController(animated: true)
     }
     
     func viewModelDidThrowError(_ viewModel: ViewModel, error: Error?) {

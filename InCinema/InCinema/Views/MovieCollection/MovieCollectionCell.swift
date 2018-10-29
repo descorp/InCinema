@@ -11,8 +11,8 @@ import UIKit
 
 class MovieCollectionCell: UICollectionViewCell, ViewDelegate {
     
-    private var posterImage: UIImageView!
     private weak var viewModel: MovieViewModel?
+    private var posterImage: UIImageView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -27,7 +27,7 @@ class MovieCollectionCell: UICollectionViewCell, ViewDelegate {
     func itemsDidChange() {        
         DispatchQueue.main.async {
             self.contentView.alpha = 0
-            UIView.animateKeyframes(withDuration: 2, delay: 0,
+            UIView.animateKeyframes(withDuration: 1, delay: 0,
                                     options: UIView.KeyframeAnimationOptions.calculationModeCubicPaced,
                                     animations: { [weak self] in
                                         self?.contentView.alpha = 1
@@ -46,10 +46,23 @@ class MovieCollectionCell: UICollectionViewCell, ViewDelegate {
             itemsDidChange()
         }
     }
+    
+    func higlight() {
+        UIView.animate(withDuration: 0.5) {
+            self.posterImage.transform = .init(scaleX: 0.95, y: 0.95)
+        }
+    }
+    
+    func unhiglight() {
+        UIView.animate(withDuration: 0.5) {
+            self.posterImage.transform = .identity            
+        }
+    }
  
     private func layout() {
         posterImage = UIImageView(frame: CGRect.zero)
         self.contentView.addSubview(posterImage)
         posterImage.fill(container: self.contentView)
     }
+    
 }
