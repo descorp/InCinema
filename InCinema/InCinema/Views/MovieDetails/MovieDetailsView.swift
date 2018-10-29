@@ -51,7 +51,12 @@ class MovieDetailsView: UIViewController, ViewDelegate {
     }
     
     override func viewDidLoad() {
+        self.title = String.localize(key: "details_title")
         self.view.backgroundColor = UIColor.black
+        self.view.layoutMargins = UIEdgeInsets(top: 64,
+                                               left: self.view.layoutMargins.left,
+                                               bottom: self.view.layoutMargins.bottom,
+                                               right: self.view.layoutMargins.right)
         
         self.titleLabel = movieTitle
         self.backdropImage = movieBackdrop
@@ -63,22 +68,17 @@ class MovieDetailsView: UIViewController, ViewDelegate {
         
         let views: [String: UIView] = ["image": backdropImage, "title": titleLabel, "description": descriptionLabel]
         let width = UIScreen.main.bounds.width
-        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[image(\(width * 0.56))]-[title]-[description]",
-                                                                options: [],
-                                                                metrics: nil,
-                                                                views: views))
-        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[image]-0-|",
-                                                                options: [],
-                                                                metrics: nil,
-                                                                views: views))
-        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[title]-0-|",
-                                                                options: [],
-                                                                metrics: nil,
-                                                                views: views))
-        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[description]-0-|",
-                                                                options: [],
-                                                                metrics: nil,
-                                                                views: views))
+        if #available(iOS 11.0, *) {
+            self.backdropImage.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
+        } else {
+            // TODO: fix top margin for iOS <11
+            self.view.layoutMargins = UIEdgeInsets(top: 64, left: 0, bottom: 0, right: 0)
+            self.backdropImage.topAnchor.constraint(equalTo: self.topLayoutGuide.topAnchor).isActive = true
+        }
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[image(\(width * 0.56))]-[title]-[description]", options: [], metrics: nil, views: views))
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[image]-0-|", options: [], metrics: nil, views: views))
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-16-[title]-16-|", options: [], metrics: nil, views: views))
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-16-[description]-16-|", options: [], metrics: nil, views: views))
         descriptionLabel.setContentHuggingPriority(UILayoutPriority.defaultLow, for: NSLayoutConstraint.Axis.vertical)
         viewModel.loadImage(.backdrop)
     }

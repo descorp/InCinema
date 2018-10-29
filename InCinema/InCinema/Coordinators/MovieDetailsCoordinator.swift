@@ -25,10 +25,8 @@ class MovieDetailsCoordinator: Coordinator, CoordinatorDelegate {
             let navigationController =  (rootViewController as? UINavigationController)
         else { return }
         
-        navigationController.isNavigationBarHidden = false
         let viewController = MovieDetailsView(viewModel: viewModel)
         viewModel.viewDelegate = viewController
-        navigationController.hidesBarsOnTap = false
         navigationController.pushViewController(viewController, animated: true)
     }
     

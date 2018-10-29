@@ -27,6 +27,8 @@ class NowInCinemaCoodrinator: Coordinator, MovieCollectionViewModelCoordinatorDe
             let navigationController =  (rootViewController as? UINavigationController)
         else { return }
         
+        navigationController.navigationBar.tintColor = UIColor.white
+        navigationController.navigationBar.barStyle = .blackTranslucent
         navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController.navigationBar.shadowImage = UIImage()
         navigationController.navigationBar.isTranslucent = true
