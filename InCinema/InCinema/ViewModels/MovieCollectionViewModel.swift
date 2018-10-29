@@ -34,6 +34,7 @@ class InCinemaMovieCollectionViewModel: MovieCollectionViewModel {
     private var page = 1
     private var lastUpdate = Date(timeIntervalSince1970: 0)
     private var updateTrashhold = 2
+    private var isOnSearch = false
     
     weak var viewDelegate: ViewDelegate?
     weak var coordinatorDelegate: MovieCollectionViewModelCoordinatorDelegate?
@@ -50,8 +51,9 @@ class InCinemaMovieCollectionViewModel: MovieCollectionViewModel {
     var scrollPosition: Float = 0.0
     
     func loadMore() {
-        guard lastUpdate < Date(timeIntervalSinceNow: TimeInterval(-updateTrashhold))
-            else { return }
+        guard
+            lastUpdate < Date(timeIntervalSinceNow: TimeInterval(-updateTrashhold)) && !isOnSearch
+        else { return }
         
         self.lastUpdate = Date()
         let region = dependency.currentLocation
@@ -73,6 +75,7 @@ class InCinemaMovieCollectionViewModel: MovieCollectionViewModel {
     }
     
     func search(query: String) {
+        isOnSearch = true
         self.model.search(query: query) { [weak self]  (data, error) in
             guard
                 let strongSelf = self
@@ -90,6 +93,7 @@ class InCinemaMovieCollectionViewModel: MovieCollectionViewModel {
     }
     
     func stopSearch() {
+        isOnSearch = false
         self.collection = self.collectionCache.map(toViewModel)
         self.viewDelegate?.itemsDidChange()
     }

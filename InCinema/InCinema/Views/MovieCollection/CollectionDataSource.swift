@@ -60,8 +60,8 @@ class CollectionHandler: NSObject, UICollectionViewDataSource, UICollectionViewD
         return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: viewID, for: indexPath)
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - 3 * scrollView.frame.size.height / 4)) {
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.item == collection.count - 1 {
             self.scrollDelegate?.didScrollToBottom()
         }
     }

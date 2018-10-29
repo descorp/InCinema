@@ -11,6 +11,7 @@ import UIKit
 
 class MovieCollectionView: UIViewController, ViewDelegate {
     
+    private var searchBar: UISearchBar!
     private var viewModel: MovieCollectionViewModel
     private var collectionView: UICollectionView!
     private var collectionHandler: CollectionHandler?
@@ -24,11 +25,11 @@ class MovieCollectionView: UIViewController, ViewDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    var flowLayout: UICollectionViewFlowLayout = {
+    private lazy var flowLayout: UICollectionViewFlowLayout = {
         let flowLayout = UICollectionViewFlowLayout()
         let width = UIScreen.main.bounds.width
         flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        flowLayout.itemSize = CGSize(width: width / 2, height: 2 * width / 3)
+        flowLayout.itemSize = CGSize(width: width / 2, height: 3 *  width / 4)
         flowLayout.minimumInteritemSpacing = 0
         flowLayout.minimumLineSpacing = 0
         flowLayout.headerReferenceSize = CGSize(width: width, height: 100)
@@ -36,7 +37,21 @@ class MovieCollectionView: UIViewController, ViewDelegate {
         return flowLayout
     }()
     
+    private lazy var movieSearchBar: UISearchBar = {
+        let searchBar = UISearchBar(frame: CGRect.zero)
+        searchBar.showsCancelButton = true
+        searchBar.placeholder = String.localize(key: "collection_search")
+        searchBar.delegate = self
+        searchBar.searchBarStyle = .minimal
+        searchBar.barStyle = .blackTranslucent
+        searchBar.tintColor = UIColor.white
+        return searchBar
+    }()
+    
     override func viewDidLoad() {
+        searchBar = movieSearchBar
+        self.navigationItem.titleView = searchBar
+        
         self.view.backgroundColor = UIColor.black
         collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
         collectionView.allowsSelection = true
@@ -50,8 +65,8 @@ class MovieCollectionView: UIViewController, ViewDelegate {
     }
     
     func itemsDidChange() {
-        DispatchQueue.main.sync {
-            self.collectionHandler?.collection = viewModel.collection
+        DispatchQueue.main.async {
+            self.collectionHandler?.collection = self.viewModel.collection
             self.collectionView.reloadData()
         }
     }
@@ -66,5 +81,22 @@ extension MovieCollectionView: ScrollingToBottomDelegate {
 extension MovieCollectionView: SelectionDelegate {
     func didSelectItem(viewModel: MovieViewModel) {
         self.viewModel.selectMovie(item: viewModel)
+    }
+}
+
+extension MovieCollectionView: UISearchBarDelegate {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.viewModel.stopSearch()
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        // to limit network activity, reload half a second after last key press.
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(performSearch) , object: nil)
+        self.perform(#selector(performSearch), with: nil, afterDelay: 0.5)
+    }
+    
+    @objc func performSearch() {
+        guard let text = searchBar.text else { return }
+        self.viewModel.search(query: text)
     }
 }

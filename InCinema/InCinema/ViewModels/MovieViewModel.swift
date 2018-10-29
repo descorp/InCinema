@@ -67,12 +67,10 @@ class InCinemaMovieViewModel: MovieViewModel {
     func loadImage(_ type: ImageType) {
         model.loadImage(type) { [weak self] (image, error) in
             guard
-                let strongSelf = self,
-                let image = image
+                let strongSelf = self
             else { return }
             
             switch type {
-                
             case .poster:
                 strongSelf.posterImage = image
                 break
@@ -80,6 +78,7 @@ class InCinemaMovieViewModel: MovieViewModel {
                 strongSelf.backdropImage = image
                 break
             }
+            
             strongSelf.viewDelegate?.itemsDidChange()
         }
     }

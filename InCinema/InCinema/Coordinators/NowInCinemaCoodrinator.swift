@@ -32,6 +32,7 @@ class NowInCinemaCoodrinator: Coordinator, MovieCollectionViewModelCoordinatorDe
         navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController.navigationBar.shadowImage = UIImage()
         navigationController.navigationBar.isTranslucent = true
+        navigationController.hidesBarsOnSwipe = true
         
         let model = InCinemaMovieCollectionModel(dependency: dependency)
         let viewModel = InCinemaMovieCollectionViewModel(model: model,
