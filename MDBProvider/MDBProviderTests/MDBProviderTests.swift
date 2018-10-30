@@ -11,7 +11,7 @@ import XCTest
 
 class MDBProviderTests: XCTestCase {
     
-    private let apiKey = "Your API key here"
+    private let apiKey = "API_KEY"
     private let movieId = 297761
     private let imagePath = "/kqjL17yufvn9OVLyXYpvtyrFfak.jpg"
 

@@ -5,7 +5,7 @@ env:
   global:
   - IOS_FRAMEWORK_SCHEME="MDBProvider"
   - WORKSPACE="InCinema.xcworkspace"
-  - secure: KiwCElcRTALaONC5YR3XrbaSsIPZwazqTLQICbkP3MYGmDJvfq/oauRYFx/9uhpk35YBB9/nMY5rxyknUGbhQvQgmT+VVyLewkIYNbZVE4pN/ECxp0V5OCUbDIzAGx29u4ezqA0nfmCky04bDzpSNWV4MgcW4zv1LoDzKs7Ozr8/olmUIycQrgZCZ3fALeaC0NcwO/tfYAUuP0Kjg/2OvoQFQKcmSFO1bHweyGkvFPe+Yr2wcZ4zvRdFLHsLtyTSZ5nQ8FIjhNzNWKPsqz0wV/Y1uCmpyvCsySiD+O5CvY6HflnozY7kwupAXk9ceamWNCQXGkYcg/pakjyUDRCLpEMj14JfzAWJ52f8REfhdxKw/QBdCsfnx+8ONhp/1FROka1ezgX99Z8sQyFgxsMjOPFZXIEOAthuEioc+tBUJZKYNEPQud45kSQBGSgWLeMJyCufe275dZRKdONRwHt87tv2u3JPPWzsbhJ9R/ZAo/OXjIUprSVLB+TUftRhxqPUqiP8HJBvrme/tHIZt/8FGXrJkaP9qkl1a/ak7YnRL92hgnlLaDhPv8ttI8T4rCcAnjHHzKHbQXOfeTrHXUIs8kjsBAf0WGdtPeFU/SUTUogR076FPMppr96s8vMHViAexTmO92+LxaaS9Kq1jr2pyctEEIqJ+YOn5Zox2qbq7Ec=
+  secure: KiwCElcRTALaONC5YR3XrbaSsIPZwazqTLQICbkP3MYGmDJvfq/oauRYFx/9uhpk35YBB9/nMY5rxyknUGbhQvQgmT+VVyLewkIYNbZVE4pN/ECxp0V5OCUbDIzAGx29u4ezqA0nfmCky04bDzpSNWV4MgcW4zv1LoDzKs7Ozr8/olmUIycQrgZCZ3fALeaC0NcwO/tfYAUuP0Kjg/2OvoQFQKcmSFO1bHweyGkvFPe+Yr2wcZ4zvRdFLHsLtyTSZ5nQ8FIjhNzNWKPsqz0wV/Y1uCmpyvCsySiD+O5CvY6HflnozY7kwupAXk9ceamWNCQXGkYcg/pakjyUDRCLpEMj14JfzAWJ52f8REfhdxKw/QBdCsfnx+8ONhp/1FROka1ezgX99Z8sQyFgxsMjOPFZXIEOAthuEioc+tBUJZKYNEPQud45kSQBGSgWLeMJyCufe275dZRKdONRwHt87tv2u3JPPWzsbhJ9R/ZAo/OXjIUprSVLB+TUftRhxqPUqiP8HJBvrme/tHIZt/8FGXrJkaP9qkl1a/ak7YnRL92hgnlLaDhPv8ttI8T4rCcAnjHHzKHbQXOfeTrHXUIs8kjsBAf0WGdtPeFU/SUTUogR076FPMppr96s8vMHViAexTmO92+LxaaS9Kq1jr2pyctEEIqJ+YOn5Zox2qbq7Ec=
   matrix:
   - DESTINATION="OS=12.0,name=iPhone 6"   SCHEME="$IOS_FRAMEWORK_SCHEME"     ACTION="build test"
 
@@ -13,6 +13,9 @@ before_install:
   - brew update
   - brew outdated xctool || brew upgrade xctool
   - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
+
+before_script:
+  - sed 's/API_KEY/[MDB_API_KEY]/g' MDBProvider/MDBProviderTests/MDBProviderTests.swift
 
 script:
   - set -o pipefail
