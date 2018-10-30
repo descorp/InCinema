@@ -1,3 +1,6 @@
+
+[![codebeat badge](https://codebeat.co/badges/fc671989-7aeb-4b3b-a5fb-9d918fcd0e54)](https://codebeat.co/projects/github-com-descorp-incinema-develop)
+
 # InCinema
 
 Application to show a list of movies currently in cinema.
