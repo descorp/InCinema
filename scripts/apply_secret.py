@@ -3,9 +3,11 @@ import shutil
 import os
 
 # grab repo name
-apiKey = sys.argv[0]
+apiKey = sys.argv[1]
+
 # ios folder path
-repoPath = os.path.join(sys.path[0])
+libraryPath = os.path.join(sys.path[0] + '/../InCinema')
+appPath = os.path.join(sys.path[0] + '/../MDBProvider')
 
 def applySecret(secret, basicPath):
     for path, subdirs, files in os.walk(basicPath):
@@ -20,4 +22,5 @@ def applySecret(secret, basicPath):
             with open(os.path.join(path, name), 'w') as file:
                 file.write(filedata)
 
-applySecret(apiKey, repoPath)
+applySecret(apiKey, libraryPath)
+applySecret(apiKey, appPath)
