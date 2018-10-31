@@ -1,5 +1,7 @@
 
 [![codebeat badge](https://codebeat.co/badges/fc671989-7aeb-4b3b-a5fb-9d918fcd0e54)](https://codebeat.co/projects/github-com-descorp-incinema-develop)
+[![CI Status](http://img.shields.io/travis/descorp/InCinema.svg?style=flat)](https://travis-ci.org/descorp/InCinema)
+[![codecov](https://codecov.io/gh/descorp/InCinema/branch/master/graph/badge.svg)](https://codecov.io/gh/descorp/InCinema)
 
 # InCinema
 
