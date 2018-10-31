@@ -36,6 +36,5 @@ MVVM-C architecture with dependency injection. Shows info based on devices local
 2. Convert MDBProvider to pod
 3. Cover InCinema with tests
 4. Improve scrolling
-5. Implement CI/CD to store Secret Key
-6. Implement Error Handling
+5. Implement Error Handling
 
