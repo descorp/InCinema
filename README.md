@@ -24,7 +24,7 @@ MVVM-C architecture with dependency injection. Shows info based on devices local
 
  Scroll      | Details       | Search 
 ------------ | ------------- | ------------
-![Search preview](https://user-images.githubusercontent.com/2648655/47792431-50401580-dd1c-11e8-9a24-7bca9bca9395.gif) | ![Details preview](https://user-images.githubusercontent.com/2648655/47792461-6221b880-dd1c-11e8-8e44-65866122c933.gif) | ![Search preview](https://user-images.githubusercontent.com/2648655/47792464-651ca900-dd1c-11e8-9a56-08dce2e6afb9.gif)
+![Scroll preview](https://user-images.githubusercontent.com/2648655/48274261-3ea8ed00-e443-11e8-991d-0fea668749fb.gif) | ![Details preview](https://user-images.githubusercontent.com/2648655/48274222-1faa5b00-e443-11e8-9e4b-e8913588bf09.gif) | ![Search preview](https://user-images.githubusercontent.com/2648655/48274124-f25dad00-e442-11e8-90a2-7ee6bb9f7f5b.gif)
 
 ## How to run
 
