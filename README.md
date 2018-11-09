@@ -32,10 +32,6 @@ MVVM-C architecture with dependency injection. Shows info based on devices local
 * replace {API_KEY} in config.info with your API Key
 * Run the app
 
-## Known bugs
-
-1) detail page on iOS <11 do not have top padding
-
 ## Todo
 
 1. Convert MDBProvider to universal library
