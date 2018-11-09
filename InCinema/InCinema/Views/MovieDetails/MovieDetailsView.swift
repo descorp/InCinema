@@ -67,12 +67,7 @@ class MovieDetailsView: UIViewController, ViewDelegate {
         if #available(iOS 11.0, *) {
             self.backdropImage.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
         } else {
-            // TODO: fix top margin for iOS <11
-            self.view.layoutMargins = UIEdgeInsets(top: 64,
-                                                   left: self.view.layoutMargins.left,
-                                                   bottom: self.view.layoutMargins.bottom,
-                                                   right: self.view.layoutMargins.right)
-            self.backdropImage.topAnchor.constraint(equalTo: self.topLayoutGuide.topAnchor).isActive = true
+            self.movieBackdrop.topAnchor.constraint(equalTo: self.topLayoutGuide.bottomAnchor).isActive = true
         }
         self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[image(\(width * 0.56))]-[title]-[description]", options: [], metrics: nil, views: views))
         self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[image]-0-|", options: [], metrics: nil, views: views))
