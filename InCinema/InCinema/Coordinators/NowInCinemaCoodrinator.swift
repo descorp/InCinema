@@ -29,6 +29,7 @@ class NowInCinemaCoodrinator: Coordinator, MovieCollectionViewModelCoordinatorDe
         
         navigationController.navigationBar.tintColor = UIColor.white
         navigationController.navigationBar.barStyle = .blackTranslucent
+        navigationController.navigationBar.prefersLargeTitles = true
         navigationController.setViewControllers([viewController], animated: false)
     }
     

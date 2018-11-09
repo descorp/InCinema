@@ -20,7 +20,6 @@ protocol SelectionDelegate: class {
 class CollectionHandler: NSObject, UICollectionViewDataSource, UICollectionViewDelegate {
     
     private let cellId = "MovieCollectionCell"
-    private let headerId = "MovieCollectionHeader"
     private let footerId = "MovieCollectionFooter"
     
     var collection: [MovieViewModel]
@@ -34,9 +33,6 @@ class CollectionHandler: NSObject, UICollectionViewDataSource, UICollectionViewD
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(MovieCollectionCell.self, forCellWithReuseIdentifier: cellId)
-        collectionView.register(MovieCollectionHeader.self,
-                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                                withReuseIdentifier: headerId)
         collectionView.register(MovieCollectionFooter.self,
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
                                 withReuseIdentifier: footerId)
@@ -56,8 +52,7 @@ class CollectionHandler: NSObject, UICollectionViewDataSource, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let viewID = kind == UICollectionView.elementKindSectionHeader ? headerId : footerId
-        return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: viewID, for: indexPath)
+        return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: footerId, for: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

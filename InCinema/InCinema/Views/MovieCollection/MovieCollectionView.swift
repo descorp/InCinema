@@ -32,7 +32,6 @@ class MovieCollectionView: UIViewController, ViewDelegate {
         flowLayout.itemSize = CGSize(width: width / 2, height: 3 *  width / 4)
         flowLayout.minimumInteritemSpacing = 0
         flowLayout.minimumLineSpacing = 0
-        flowLayout.headerReferenceSize = CGSize(width: width, height: 100)
         flowLayout.footerReferenceSize = CGSize(width: width, height: 100)
         return flowLayout
     }()
