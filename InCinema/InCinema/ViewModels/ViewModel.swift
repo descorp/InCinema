@@ -9,6 +9,7 @@
 import Foundation
 
 protocol ViewModel: class {
+    var title: String { get }
 }
 
 protocol ViewDelegate: class {

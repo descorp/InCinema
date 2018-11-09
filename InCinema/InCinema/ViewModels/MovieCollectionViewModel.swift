@@ -36,6 +36,10 @@ class InCinemaMovieCollectionViewModel: MovieCollectionViewModel {
     private var updateTrashhold = 2
     private var isOnSearch = false
     
+    var title: String {
+        return String.localize(key: "collection_title")
+    }
+    
     weak var viewDelegate: ViewDelegate?
     weak var coordinatorDelegate: MovieCollectionViewModelCoordinatorDelegate?
     

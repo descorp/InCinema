@@ -51,7 +51,7 @@ class MovieDetailsView: UIViewController, ViewDelegate {
     }
     
     override func viewDidLoad() {
-        self.title = String.localize(key: "details_title")
+        self.title = viewModel.title
         self.view.backgroundColor = UIColor.black
         
         self.titleLabel = movieTitle

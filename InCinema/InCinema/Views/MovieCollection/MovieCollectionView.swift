@@ -51,6 +51,7 @@ class MovieCollectionView: UIViewController, ViewDelegate {
     override func viewDidLoad() {
         searchBar = movieSearchBar
         self.navigationItem.titleView = searchBar
+        self.navigationItem.title = viewModel.title
         
         self.view.backgroundColor = UIColor.black
         collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
