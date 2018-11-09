@@ -26,9 +26,10 @@ protocol MovieViewModel: ViewModel {
 
 class InCinemaMovieViewModel: MovieViewModel {
     
+    private var model: MovieModel
+    
     weak var viewDelegate: ViewDelegate?
     
-    private var model: MovieModel
     var title: String {
         return String.localize(key: "collection_title")
     }

@@ -11,11 +11,7 @@ import UIKit
 
 class MovieDetailsView: UIViewController, ViewDelegate {
     
-    private var titleLabel: UILabel!
-    private var backdropImage: UIImageView!
-    private var descriptionLabel: UILabel!
-    
-    internal var movieTitle: UILabel = {
+    internal lazy var movieTitle: UILabel = {
         let lable = UILabel()
         lable.textColor = UIColor.white
         lable.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
@@ -24,7 +20,7 @@ class MovieDetailsView: UIViewController, ViewDelegate {
         return lable
     }()
     
-    internal var movieDescription: UILabel = {
+    internal lazy var movieDescription: UILabel = {
         let lable = UILabel()
         lable.textColor = UIColor.white
         lable.font = UIFont.systemFont(ofSize: 16)
@@ -33,7 +29,7 @@ class MovieDetailsView: UIViewController, ViewDelegate {
         return lable
     }()
     
-    internal var movieBackdrop: UIImageView = {
+    internal lazy var movieBackdrop: UIImageView = {
         let imageView = UIImageView(image: nil)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -54,18 +50,14 @@ class MovieDetailsView: UIViewController, ViewDelegate {
         self.title = viewModel.title
         self.view.backgroundColor = UIColor.black
         
-        self.titleLabel = movieTitle
-        self.backdropImage = movieBackdrop
-        self.descriptionLabel = movieDescription
+        self.view.addSubview(movieTitle)
+        self.view.addSubview(movieBackdrop)
+        self.view.addSubview(movieDescription)
         
-        self.view.addSubview(titleLabel)
-        self.view.addSubview(backdropImage)
-        self.view.addSubview(descriptionLabel)
-        
-        let views: [String: UIView] = ["image": backdropImage, "title": titleLabel, "description": descriptionLabel]
+        let views: [String: UIView] = ["image": movieBackdrop, "title": movieTitle, "description": movieDescription]
         let width = UIScreen.main.bounds.width
         if #available(iOS 11.0, *) {
-            self.backdropImage.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
+            self.movieBackdrop.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
         } else {
             self.movieBackdrop.topAnchor.constraint(equalTo: self.topLayoutGuide.bottomAnchor).isActive = true
         }
@@ -73,15 +65,15 @@ class MovieDetailsView: UIViewController, ViewDelegate {
         self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[image]-0-|", options: [], metrics: nil, views: views))
         self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-16-[title]-16-|", options: [], metrics: nil, views: views))
         self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-16-[description]-16-|", options: [], metrics: nil, views: views))
-        descriptionLabel.setContentHuggingPriority(UILayoutPriority.defaultLow, for: NSLayoutConstraint.Axis.vertical)
+        movieDescription.setContentHuggingPriority(UILayoutPriority.defaultLow, for: NSLayoutConstraint.Axis.vertical)
         viewModel.loadImage(.backdrop)
     }
     
     func itemsDidChange() {
         DispatchQueue.main.async { [weak self] in
-            self?.backdropImage.image = self?.viewModel.backdropImage
-            self?.titleLabel.text = self?.viewModel.title
-            self?.descriptionLabel.text = self?.viewModel.plotDescription
+            self?.movieBackdrop.image = self?.viewModel.backdropImage
+            self?.movieTitle.text = self?.viewModel.movieTitle
+            self?.movieDescription.text = self?.viewModel.plotDescription
         }
     }
     
