@@ -11,7 +11,6 @@ import UIKit
 
 class MovieCollectionView: UIViewController, ViewDelegate {
     
-    private var searchBar: UISearchBar!
     private var viewModel: MovieCollectionViewModel
     private var collectionView: UICollectionView!
     private var collectionHandler: CollectionHandler?
@@ -32,25 +31,26 @@ class MovieCollectionView: UIViewController, ViewDelegate {
         flowLayout.itemSize = CGSize(width: width / 2, height: 3 *  width / 4)
         flowLayout.minimumInteritemSpacing = 0
         flowLayout.minimumLineSpacing = 0
-        flowLayout.headerReferenceSize = CGSize(width: width, height: 100)
         flowLayout.footerReferenceSize = CGSize(width: width, height: 100)
         return flowLayout
     }()
     
-    private lazy var movieSearchBar: UISearchBar = {
-        let searchBar = UISearchBar(frame: CGRect.zero)
-        searchBar.showsCancelButton = true
-        searchBar.placeholder = String.localize(key: "collection_search")
-        searchBar.delegate = self
-        searchBar.searchBarStyle = .minimal
-        searchBar.barStyle = .blackTranslucent
-        searchBar.tintColor = UIColor.white
-        return searchBar
+    private lazy var movieSearchController: UISearchController = {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchResultsUpdater = self
+        searchController.delegate = self
+        searchController.searchBar.placeholder = String.localize(key: "collection_search")
+        searchController.searchBar.searchBarStyle = .minimal
+        searchController.searchBar.barStyle = .blackTranslucent
+        searchController.searchBar.tintColor = UIColor.white
+        return searchController
     }()
     
     override func viewDidLoad() {
-        searchBar = movieSearchBar
-        self.navigationItem.titleView = searchBar
+        self.navigationItem.title = viewModel.title
+        self.navigationItem.searchController = movieSearchController
         
         self.view.backgroundColor = UIColor.black
         collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
@@ -84,18 +84,18 @@ extension MovieCollectionView: SelectionDelegate {
     }
 }
 
-extension MovieCollectionView: UISearchBarDelegate {
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+extension MovieCollectionView: UISearchResultsUpdating, UISearchControllerDelegate {
+    
+    func didDismissSearchController(_ searchController: UISearchController) {
         self.viewModel.stopSearch()
     }
     
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        // to limit network activity, reload half a second after last key press.
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(performSearch) , object: nil)
-        self.perform(#selector(performSearch), with: nil, afterDelay: 0.5)
+    func updateSearchResults(for searchController: UISearchController) {
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(performSearch(_:)) , object: nil)
+        self.perform(#selector(performSearch(_:)), with: searchController.searchBar, afterDelay: 0.5)
     }
     
-    @objc func performSearch() {
+    @objc func performSearch(_ searchBar: UISearchBar) {
         guard let text = searchBar.text else { return }
         self.viewModel.search(query: text)
     }

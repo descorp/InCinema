@@ -29,17 +29,7 @@ class NowInCinemaCoodrinator: Coordinator, MovieCollectionViewModelCoordinatorDe
         
         navigationController.navigationBar.tintColor = UIColor.white
         navigationController.navigationBar.barStyle = .blackTranslucent
-        navigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navigationController.navigationBar.shadowImage = UIImage()
-        navigationController.navigationBar.isTranslucent = true
-        navigationController.hidesBarsOnSwipe = true
-        
-        let model = InCinemaMovieCollectionModel(dependency: dependency)
-        let viewModel = InCinemaMovieCollectionViewModel(model: model,
-                                                         dependency: dependency)
-        viewModel.coordinatorDelegate = self
-        let viewController = MovieCollectionView(viewModel: viewModel)
-        viewModel.viewDelegate = viewController
+        navigationController.navigationBar.prefersLargeTitles = true
         navigationController.setViewControllers([viewController], animated: false)
     }
     
@@ -54,4 +44,20 @@ class NowInCinemaCoodrinator: Coordinator, MovieCollectionViewModelCoordinatorDe
     func viewModelDidThrowError(_ viewModel: ViewModel, error: Error?) {
         // TODO: Show Error
     }
+    
+    private lazy var model = {
+        return InCinemaMovieCollectionModel(dependency: dependency)
+    }()
+    
+    private lazy var viewModel: InCinemaMovieCollectionViewModel = {
+        let viewModel = InCinemaMovieCollectionViewModel(model: model, dependency: dependency)
+        viewModel.coordinatorDelegate = self
+        return viewModel
+    }()
+    
+    private lazy var viewController: MovieCollectionView = {
+        let viewController = MovieCollectionView(viewModel: viewModel)
+        viewModel.viewDelegate = viewController
+        return viewController
+    }()
 }

@@ -15,7 +15,7 @@ protocol MovieViewModel: ViewModel {
     
     var backdropImage: UIImage? { get }
     var posterImage: UIImage? { get }
-    var title: String { get }
+    var movieTitle: String { get }
     var originalTitle: String? { get }
     var plotDescription: String { get }
     var year: String { get }
@@ -26,9 +26,13 @@ protocol MovieViewModel: ViewModel {
 
 class InCinemaMovieViewModel: MovieViewModel {
     
+    private var model: MovieModel
+    
     weak var viewDelegate: ViewDelegate?
     
-    private var model: MovieModel
+    var title: String {
+        return String.localize(key: "collection_title")
+    }
     
     init(model: MovieModel) {
         self.model = model
@@ -44,7 +48,7 @@ class InCinemaMovieViewModel: MovieViewModel {
         return model.movie
     }
     
-    var title: String {
+    var movieTitle: String {
         return movie.title
     }
     

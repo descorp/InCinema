@@ -39,7 +39,7 @@ class MovieCollectionCell: UICollectionViewCell, ViewDelegate {
             guard
                 let image = self.viewModel?.posterImage
             else {
-                self.titleLabel.text = self.viewModel?.title
+                self.titleLabel.text = self.viewModel?.movieTitle
                 return
             }
             
