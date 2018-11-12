@@ -10,9 +10,9 @@ import Foundation
 import MDBProvider
 
 protocol IMoviesProvider {
-    func getMoviesInCinema(region: String, page: Int, language: String, than handler: @escaping ([Movie]?, Error?) -> Void)
+    func getMoviesInCinema(region: String, page: Int, language: String, than handler: @escaping (([Movie], Int)?, Error?) -> Void)
     func getMovie(id: Int, language: String, than handler: @escaping (MovieDetails?, Error?) -> Void)
-    func search(query: String, language: String, than handler: @escaping ([Movie]?, Error?) -> Void)
+    func search(query: String, language: String, page: Int, than handler: @escaping (([Movie], Int)?, Error?) -> Void)
 }
 
 protocol HasImageLoader {
@@ -31,11 +31,11 @@ class MoviesService: IMoviesProvider, HasImageLoader {
         self.provider = MDBProvider(apiKey: apiKey)
     }
     
-    func getMoviesInCinema(region: String, page: Int = 0, language: String, than handler: @escaping ([Movie]?, Error?) -> Void) {
+    func getMoviesInCinema(region: String, page: Int = 0, language: String, than handler: @escaping (([Movie], Int)?, Error?) -> Void) {
         self.provider.request(Endpoint.nowPlaying(page: page, region: region)) { result in
             switch result {
             case .success(let responce):
-                handler(responce.results, nil)
+                handler((responce.results, responce.totalResults), nil)
             case .failure(let error):
                 handler(nil, error)
             }
@@ -53,11 +53,11 @@ class MoviesService: IMoviesProvider, HasImageLoader {
         }
     }
     
-    func search(query: String, language: String, than handler: @escaping ([Movie]?, Error?) -> Void) {
+    func search(query: String, language: String, page: Int = 1, than handler: @escaping (([Movie], Int)?, Error?) -> Void) {
         self.provider.request(Endpoint.searchMovie(query: query)) { result in
             switch result {
             case .success(let responce):
-                handler(responce.results, nil)
+                handler((responce.results, responce.totalResults), nil)
             case .failure(let error):
                 handler(nil, error)
             }

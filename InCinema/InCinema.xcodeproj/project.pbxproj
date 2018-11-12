@@ -259,6 +259,7 @@
 				40FD56C42181ABDB007BACD7 /* ViewModel.swift */,
 				40FD56BC2180C28F007BACD7 /* MovieViewModel.swift */,
 				40FD56B72180BDB9007BACD7 /* MovieCollectionViewModel.swift */,
+				40C190D321866AFC00D51E4B /* CollectionDataSource.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -276,7 +277,6 @@
 			isa = PBXGroup;
 			children = (
 				40FD56AF2180B97D007BACD7 /* MovieCollectionView.swift */,
-				40C190D321866AFC00D51E4B /* CollectionDataSource.swift */,
 				40C190D521866CBF00D51E4B /* MovieCollectionCell.swift */,
 				40C190D921868EBB00D51E4B /* MovieCollectionFooter.swift */,
 			);

@@ -31,7 +31,7 @@ class InCinemaMovieViewModel: MovieViewModel {
     weak var viewDelegate: ViewDelegate?
     
     var title: String {
-        return String.localize(key: "collection_title")
+        return String.localize(key: "details_title")
     }
     
     init(model: MovieModel) {

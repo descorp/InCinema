@@ -9,22 +9,20 @@
 import Foundation
 import UIKit
 
-class MovieCollectionView: UIViewController, ViewDelegate {
+class MovieCollectionView: UICollectionViewController, ViewDelegate {
     
     private var viewModel: MovieCollectionViewModel
-    private var collectionView: UICollectionView!
-    private var collectionHandler: CollectionHandler?
     
     init(viewModel: MovieCollectionViewModel) {
         self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
+        super.init(collectionViewLayout: flowLayout)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private lazy var flowLayout: UICollectionViewFlowLayout = {
+    private var flowLayout: UICollectionViewFlowLayout = {
         let flowLayout = UICollectionViewFlowLayout()
         let width = UIScreen.main.bounds.width
         flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -53,22 +51,28 @@ class MovieCollectionView: UIViewController, ViewDelegate {
         self.navigationItem.searchController = movieSearchController
         
         self.view.backgroundColor = UIColor.black
-        collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
-        collectionView.allowsSelection = true
-        self.view.addSubview(collectionView)
-        collectionView.fill(container: self.view)
-        
-        self.collectionHandler = CollectionHandler(collectionView: self.collectionView)
-        self.collectionHandler?.scrollDelegate = self
-        self.collectionHandler?.selectionDelegate = self
+        collectionView.allowsSelection = true        
         viewModel.loadMore()
     }
     
     func itemsDidChange() {
-        DispatchQueue.main.async {
-            self.collectionHandler?.collection = self.viewModel.collection
-            self.collectionView.reloadData()
+        DispatchQueue.main.async { [weak self] in
+            guard let strongSelf = self,
+                  let newIndexPaths = strongSelf.viewModel.newIndexPaths
+            else {
+                self?.collectionView.reloadData()
+                return
+            }
+            
+            let indexPathToReload = strongSelf.visibleIndexPathsToReload(intersecting: newIndexPaths)
+            strongSelf.collectionView.reloadItems(at: indexPathToReload)
         }
+    }
+    
+    private func visibleIndexPathsToReload(intersecting indexPaths: [IndexPath]) -> [IndexPath] {
+        let indexPathsForVisibleRows = self.collectionView.indexPathsForVisibleItems
+        let indexPathsIntersection = Set(indexPathsForVisibleRows).intersection(indexPaths)
+        return Array(indexPathsIntersection)
     }
 }
 

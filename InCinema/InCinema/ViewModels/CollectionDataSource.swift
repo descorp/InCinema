@@ -17,34 +17,36 @@ protocol SelectionDelegate: class {
     func didSelectItem(viewModel: MovieViewModel)
 }
 
-class CollectionHandler: NSObject, UICollectionViewDataSource, UICollectionViewDelegate {
+class CollectionHandler: NSObject, UICollectionViewDataSource, UICollectionViewDataSourcePrefetching, UICollectionViewDelegate {
     
-    private let cellId = "MovieCollectionCell"
-    private let footerId = "MovieCollectionFooter"
+    static let cellId = "MovieCollectionCell"
+    static let footerId = "MovieCollectionFooter"
     
-    var collection: [MovieViewModel]
+    private var collection: [MovieViewModel]
+    private var total: Int
     
     public weak var scrollDelegate: ScrollingToBottomDelegate?
     public weak var selectionDelegate: SelectionDelegate?
     
-    init(collectionView: UICollectionView, collection: [MovieViewModel] = []) {
+    init(collection: [MovieViewModel] = []) {
         self.collection = collection
+        self.total = collection.count
         super.init()
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.register(MovieCollectionCell.self, forCellWithReuseIdentifier: cellId)
-        collectionView.register(MovieCollectionFooter.self,
-                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
-                                withReuseIdentifier: footerId)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return collection.count
+        return total
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        if indexPaths.contains(where: hasCell) {
+            self.scrollDelegate?.didScrollToBottom()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
-        if let movieCell = cell as? MovieCollectionCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionHandler.cellId, for: indexPath)
+        if !hasCell(for: indexPath), let movieCell = cell as? MovieCollectionCell {
             movieCell.bind(viewModel: collection[indexPath.item])
         }
         
@@ -52,13 +54,9 @@ class CollectionHandler: NSObject, UICollectionViewDataSource, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: footerId, for: indexPath)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if indexPath.item == collection.count - 1 {
-            self.scrollDelegate?.didScrollToBottom()
-        }
+        return collectionView.dequeueReusableSupplementaryView(ofKind: kind,
+                                                               withReuseIdentifier: CollectionHandler.footerId,
+                                                               for: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -77,5 +75,22 @@ class CollectionHandler: NSObject, UICollectionViewDataSource, UICollectionViewD
             cell.unhiglight()
         }
     }
+    
+    // MARK: collection access
+    
+    func appendCollection(with newItems: [MovieViewModel]) -> [IndexPath] {
+        let startIndex = collection.count - newItems.count
+        let endIndex = startIndex + newItems.count
+        collection.append(contentsOf: newItems)
+        return (startIndex..<endIndex).map { IndexPath(row: $0, section: 0) }
+    }
+    
+    func resetCollection(with newItems: [MovieViewModel], total: Int) {
+        self.collection = newItems
+        self.total = total
+    }
+    
+    private func hasCell(for indexPath: IndexPath) -> Bool {
+        return indexPath.item >= collection.count
+    }
 }
-
