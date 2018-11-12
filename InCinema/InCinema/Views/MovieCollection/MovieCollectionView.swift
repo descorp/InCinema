@@ -95,12 +95,7 @@ extension MovieCollectionView: UISearchResultsUpdating, UISearchControllerDelega
     }
     
     func updateSearchResults(for searchController: UISearchController) {
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(performSearch(_:)) , object: nil)
-        self.perform(#selector(performSearch(_:)), with: searchController.searchBar, afterDelay: 0.5)
-    }
-    
-    @objc func performSearch(_ searchBar: UISearchBar) {
-        guard let text = searchBar.text else { return }
+        guard let text = searchController.searchBar.text else { return }
         self.viewModel.search(query: text)
     }
 }
