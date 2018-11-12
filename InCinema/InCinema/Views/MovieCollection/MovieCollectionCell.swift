@@ -43,23 +43,24 @@ class MovieCollectionCell: UICollectionViewCell, ViewDelegate {
                 return
             }
             
-            if self.posterImage.image != image {
-                self.contentView.alpha = 0
-                self.posterImage.image = image
-                UIView.animateKeyframes(withDuration: 1, delay: 0,
-                                        options: UIView.KeyframeAnimationOptions.calculationModeCubicPaced,
-                                        animations: { [weak self] in
-                                            self?.contentView.alpha = 1
-                }) { _ in }
+            if let existingImage = self.posterImage.image, existingImage.hash == image.hash {
+                return
             }
+            
+            self.contentView.alpha = 0
+            self.posterImage.image = image
+            UIView.animateKeyframes(withDuration: 1, delay: 0,
+                                    options: UIView.KeyframeAnimationOptions.calculationModeCubicPaced,
+                                    animations: { [weak self] in self?.contentView.alpha = 1 }) { _ in }
         }
     }
     
     func bind(viewModel: MovieViewModel) {
-        self.posterImage.image = nil
         self.viewModel = viewModel
         viewModel.viewDelegate = self
-    
+        DispatchQueue.main.async { [weak self] in
+            self?.posterImage.image = nil
+        }
         viewModel.loadImage(.poster)
     }
     
