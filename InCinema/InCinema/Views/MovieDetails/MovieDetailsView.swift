@@ -71,7 +71,12 @@ class MovieDetailsView: UIViewController, ViewDelegate {
     
     func itemsDidChange() {
         DispatchQueue.main.async { [weak self] in
-            self?.movieBackdrop.image = self?.viewModel.backdropImage
+            if let image = self?.viewModel.backdropImage {
+                self?.movieBackdrop.image = image
+            } else {
+                self?.movieBackdrop.contentMode = .center
+                self?.movieBackdrop.image = UIImage(named: "movie_placeholder")
+            }
             self?.movieTitle.text = self?.viewModel.movieTitle
             self?.movieDescription.text = self?.viewModel.plotDescription
         }
