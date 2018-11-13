@@ -15,7 +15,7 @@ protocol MovieCollectionViewModelCoordinatorDelegate: CoordinatorDelegate {
 
 protocol MovieCollectionViewModel: ViewModel {
     
-    var dataSource: UICollectionViewDataSource & UICollectionViewDataSourcePrefetching & UICollectionViewDelegate  { get }
+    var dataSource: UICollectionViewDataSource & UICollectionViewDelegate  { get }
     var newIndexPaths: [IndexPath]? { get }
     
     func loadMore()
@@ -53,7 +53,7 @@ class InCinemaMovieCollectionViewModel: MovieCollectionViewModel {
     
     var newIndexPaths: [IndexPath]?
     
-    var dataSource: UICollectionViewDataSource & UICollectionViewDataSourcePrefetching & UICollectionViewDelegate {
+    var dataSource: UICollectionViewDataSource & UICollectionViewDelegate {
         return self.collection
     }
     
@@ -110,7 +110,6 @@ class InCinemaMovieCollectionViewModel: MovieCollectionViewModel {
 extension InCinemaMovieCollectionViewModel {
     func register(collectionView: UICollectionView, scrollDelegate: ScrollingToBottomDelegate, selectDelegate: SelectionDelegate) {
         collectionView.delegate = self.collection
-        collectionView.prefetchDataSource = self.collection
         collectionView.dataSource = self.collection
         self.collection.scrollDelegate = scrollDelegate
         self.collection.selectionDelegate = selectDelegate

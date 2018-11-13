@@ -17,40 +17,49 @@ protocol SelectionDelegate: class {
     func didSelectItem(viewModel: MovieViewModel)
 }
 
-class CollectionHandler: NSObject, UICollectionViewDataSource, UICollectionViewDataSourcePrefetching, UICollectionViewDelegate {
+class CollectionHandler: NSObject, UICollectionViewDataSource, UICollectionViewDelegate {
     
     static let cellId = "MovieCollectionCell"
     static let footerId = "MovieCollectionFooter"
     
     private var collection: [MovieViewModel]
-    private var total: Int
     
     public weak var scrollDelegate: ScrollingToBottomDelegate?
     public weak var selectionDelegate: SelectionDelegate?
     
     init(collection: [MovieViewModel] = []) {
         self.collection = collection
-        self.total = collection.count
         super.init()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return total
+        return collection.count
     }
     
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        if indexPaths.contains(where: hasCell) {
+        if indexPaths.contains(where: isLoadingCell) {
             self.scrollDelegate?.didScrollToBottom()
+        }
+        
+        for movie in indexPaths.filter(isImageNotLoaded).map({ $0.item }) {
+            collection[movie].loadImage(.poster)
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CollectionHandler.cellId, for: indexPath)
-        if !hasCell(for: indexPath), let movieCell = cell as? MovieCollectionCell {
-            movieCell.bind(viewModel: collection[indexPath.item])
+        if let movieCell = cell as? MovieCollectionCell {
+            let viewModel = isLoadingCell(for: indexPath) ? nil : collection[indexPath.item]
+            movieCell.bind(viewModel: viewModel)
         }
         
         return cell
+    }
+        
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.item == collection.count - 1 {
+            self.scrollDelegate?.didScrollToBottom()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -87,10 +96,13 @@ class CollectionHandler: NSObject, UICollectionViewDataSource, UICollectionViewD
     
     func resetCollection(with newItems: [MovieViewModel], total: Int) {
         self.collection = newItems
-        self.total = total
     }
     
-    private func hasCell(for indexPath: IndexPath) -> Bool {
+    private func isLoadingCell(for indexPath: IndexPath) -> Bool {
         return indexPath.item >= collection.count
+    }
+    
+    private func isImageNotLoaded(for indexPath: IndexPath) -> Bool {
+        return indexPath.item < collection.count && collection[indexPath.item].posterImage == nil
     }
 }
