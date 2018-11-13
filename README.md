@@ -4,7 +4,7 @@
 [![codecov](https://codecov.io/gh/descorp/InCinema/branch/master/graph/badge.svg)](https://codecov.io/gh/descorp/InCinema)
 
 # InCinema
-<img src="https://www.themoviedb.org/assets/1/v4/logos/408x161-powered-by-rectangle-green-bb4301c10ddc749b4e79463811a68afebeae66ef43d17bcfd8ff0e60ded7ce99.png" alt="Powered by The MovieDB" width="150">
+![logo](https://user-images.githubusercontent.com/2648655/48412934-5be10280-e746-11e8-8047-8cc2b9a3601e.png)
 
 Application to show a list of movies currently in cinema.
 
@@ -39,4 +39,6 @@ MVVM-C architecture with dependency injection. Shows info based on devices local
 3. Cover InCinema with tests
 4. Improve scrolling
 5. Implement Error Handling
+
+<img src="https://www.themoviedb.org/assets/1/v4/logos/408x161-powered-by-rectangle-green-bb4301c10ddc749b4e79463811a68afebeae66ef43d17bcfd8ff0e60ded7ce99.png" alt="Powered by The MovieDB" width="150">
 
