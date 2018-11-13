@@ -57,15 +57,7 @@ class MovieCollectionView: UICollectionViewController, ViewDelegate {
     
     func itemsDidChange() {
         DispatchQueue.main.async { [weak self] in
-            guard let strongSelf = self,
-                  let newIndexPaths = strongSelf.viewModel.newIndexPaths
-            else {
-                self?.collectionView.reloadData()
-                return
-            }
-            
-            let indexPathToReload = strongSelf.visibleIndexPathsToReload(intersecting: newIndexPaths)
-            strongSelf.collectionView.reloadItems(at: indexPathToReload)
+            self?.collectionView.reloadData()
         }
     }
     
