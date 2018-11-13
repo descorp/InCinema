@@ -65,7 +65,7 @@ class MoviesService: IMoviesProvider, HasImageLoader {
     }
 
     func loadImage(path: String, than handler: @escaping (Data?, Error?) -> Void) {
-        self.provider.request(Endpoint.loadImageData(path: path, size: .w780)) { (result) in
+        self.provider.request(Endpoint.loadImageData(path: path, size: .w500)) { (result) in
             switch result {
             case .success(let responce):
                 handler(responce, nil)

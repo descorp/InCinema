@@ -17,7 +17,7 @@ protocol MovieCollectionModel {
 class InCinemaMovieCollectionModel: MovieCollectionModel {
     typealias Dependency = HasMDB & HasLocale
     
-    private var trottler = Throttler(miliseconds: 0.75)
+    private var trottler = Throttler(miliseconds: 1.0)
     let dependency: Dependency
     
     init(dependency: Dependency) {
