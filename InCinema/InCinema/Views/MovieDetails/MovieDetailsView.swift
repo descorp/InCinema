@@ -75,7 +75,7 @@ class MovieDetailsView: UIViewController, ViewDelegate {
                 self?.movieBackdrop.image = image
             } else {
                 self?.movieBackdrop.contentMode = .center
-                self?.movieBackdrop.image = UIImage(named: "movie_placeholder")
+                self?.movieBackdrop.image = UIImage(named: "backdrop_placeholder")
             }
             self?.movieTitle.text = self?.viewModel.movieTitle
             self?.movieDescription.text = self?.viewModel.plotDescription
