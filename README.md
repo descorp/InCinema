@@ -35,10 +35,10 @@ MVVM-C architecture with dependency injection. Shows info based on devices local
 ## Todo
 
 1. Convert MDBProvider to universal library
-2. Convert MDBProvider to pod
+2. Convert MDBProvider to pod / Swift PM
 3. Cover InCinema with tests
-4. Improve scrolling
-5. Implement Error Handling
+4. Implement Error Handling
+
+## Credits
 
 <img src="https://www.themoviedb.org/assets/1/v4/logos/408x161-powered-by-rectangle-green-bb4301c10ddc749b4e79463811a68afebeae66ef43d17bcfd8ff0e60ded7ce99.png" alt="Powered by The MovieDB" width="150">
-
