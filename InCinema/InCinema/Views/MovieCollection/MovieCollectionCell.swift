@@ -11,56 +11,78 @@ import UIKit
 
 class MovieCollectionCell: UICollectionViewCell, ViewDelegate {
     
-    private weak var viewModel: MovieViewModel?
-    private var posterImage: UIImageView!
-    private var titleLabel: UILabel!
+    private weak var viewModel: MovieViewModel? {
+        didSet{
+            self.viewModel?.viewDelegate = self
+            self.itemsDidChange()
+        }
+    }
     
-    private var movieTitleLabel: UILabel = {
+    private lazy var movieTitleLabel: UILabel = {
         let titleLabel = UILabel(frame: CGRect.zero)
         titleLabel.textColor = UIColor.white
-        titleLabel.font = UIFont.systemFont(ofSize: 16, weight: .light)
+        titleLabel.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
         titleLabel.numberOfLines = 0
         titleLabel.textAlignment = .center
+        self.contentView.addSubview(titleLabel)
+        titleLabel.fill(container: self.contentView)
         return titleLabel
+    }()
+    
+    private lazy var posterImage: UIImageView = {
+        let imageView = UIImageView(frame: CGRect.zero)
+        self.contentView.addSubview(imageView)
+        imageView.fill(container: self.contentView)
+        self.contentView.sendSubviewToBack(imageView)
+        return imageView
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.layout()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.layout()
     }
     
     func itemsDidChange() {        
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
             guard
-                let image = self.viewModel?.posterImage
+                let strongSelf = self,
+                let viewModel = strongSelf.viewModel
             else {
-                self.titleLabel.text = self.viewModel?.movieTitle
+                self?.movieTitleLabel.text = nil
+                self?.posterImage.image = nil
                 return
             }
             
-            if self.posterImage.image != image {
-                self.contentView.alpha = 0
-                self.posterImage.image = image
-                UIView.animateKeyframes(withDuration: 1, delay: 0,
-                                        options: UIView.KeyframeAnimationOptions.calculationModeCubicPaced,
-                                        animations: { [weak self] in
-                                            self?.contentView.alpha = 1
-                }) { _ in }
+            strongSelf.movieTitleLabel.text = viewModel.movieTitle
+            guard let _ = viewModel.posterNotAvailable else {
+                strongSelf.posterImage.alpha = 0
+                strongSelf.viewModel?.loadImage(.poster)
+                return
             }
+            
+            if let image = viewModel.posterImage {
+                strongSelf.posterImage.contentMode = .scaleAspectFill
+                strongSelf.posterImage.image = image
+                strongSelf.movieTitleLabel.alpha = 0
+            } else {
+                strongSelf.posterImage.contentMode = .center
+                strongSelf.movieTitleLabel.alpha = 1
+                strongSelf.posterImage.image = UIImage(named: "poster_placeholder")
+            }
+            
+            UIView.animateKeyframes(withDuration: 1, delay: 0,
+                                    options: UIView.KeyframeAnimationOptions.calculationModeCubicPaced,
+                                    animations: { [weak self] in
+                                        self?.posterImage.alpha = 1
+            }) { _ in }
         }
     }
     
-    func bind(viewModel: MovieViewModel) {
-        self.posterImage.image = nil
+    func bind(viewModel: MovieViewModel?) {
         self.viewModel = viewModel
-        viewModel.viewDelegate = self
-    
-        viewModel.loadImage(.poster)
     }
     
     func higlight() {
@@ -74,15 +96,4 @@ class MovieCollectionCell: UICollectionViewCell, ViewDelegate {
             self.posterImage.transform = .identity            
         }
     }
- 
-    private func layout() {
-        titleLabel = movieTitleLabel
-        self.contentView.addSubview(titleLabel)
-        titleLabel.fill(container: self.contentView)
-        
-        posterImage = UIImageView(frame: CGRect.zero)
-        self.contentView.addSubview(posterImage)
-        posterImage.fill(container: self.contentView)
-    }
-    
 }

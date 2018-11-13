@@ -22,6 +22,9 @@ protocol MovieViewModel: ViewModel {
     var rate: String { get }
     
     func loadImage(_ type: ImageType)
+    
+    var posterNotAvailable: Bool? { get }
+    var backdropNotAvailable: Bool? { get }
 }
 
 class InCinemaMovieViewModel: MovieViewModel {
@@ -31,7 +34,7 @@ class InCinemaMovieViewModel: MovieViewModel {
     weak var viewDelegate: ViewDelegate?
     
     var title: String {
-        return String.localize(key: "collection_title")
+        return String.localize(key: "details_title")
     }
     
     init(model: MovieModel) {
@@ -39,6 +42,10 @@ class InCinemaMovieViewModel: MovieViewModel {
     }
     
     // MARK: Movie ViewModel
+    
+    var posterNotAvailable: Bool?
+    
+    var backdropNotAvailable: Bool?
     
     var backdropImage: UIImage?
     
@@ -77,9 +84,11 @@ class InCinemaMovieViewModel: MovieViewModel {
             switch type {
             case .poster:
                 strongSelf.posterImage = image
+                strongSelf.posterNotAvailable = image == nil
                 break
             case .backdrop:
                 strongSelf.backdropImage = image
+                strongSelf.backdropNotAvailable = image == nil
                 break
             }
             

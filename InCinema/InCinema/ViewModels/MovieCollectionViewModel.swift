@@ -15,26 +15,24 @@ protocol MovieCollectionViewModelCoordinatorDelegate: CoordinatorDelegate {
 
 protocol MovieCollectionViewModel: ViewModel {
     
-    var collection: [MovieViewModel] { get }
-    var scrollPosition: Float { get }
+    var dataSource: UICollectionViewDataSource & UICollectionViewDelegate  { get }
+    var newIndexPaths: [IndexPath]? { get }
     
     func loadMore()
     func search(query: String)
     func stopSearch()
-    func updateScrollPosition(_ position: Float)
     func selectMovie(item: MovieViewModel)
 }
 
 class InCinemaMovieCollectionViewModel: MovieCollectionViewModel {
+    
     typealias Dependency = HasLocation & HasMDB & HasImageService & HasLocale
     
     private let dependency: Dependency
     private var model: MovieCollectionModel
-    private var collectionCache = [Movie]()
     private var page = 1
-    private var lastUpdate = Date(timeIntervalSince1970: 0)
-    private var updateTrashhold = 2
-    private var isOnSearch = false
+    private var searchQuery: String? = nil
+    private let collection: CollectionHandler
     
     var title: String {
         return String.localize(key: "collection_title")
@@ -44,66 +42,42 @@ class InCinemaMovieCollectionViewModel: MovieCollectionViewModel {
     weak var coordinatorDelegate: MovieCollectionViewModelCoordinatorDelegate?
     
     init(model: MovieCollectionModel,
-         dependency: Dependency) {
+         dependency: Dependency,
+         dataSource: CollectionHandler = CollectionHandler()) {
         self.model = model
         self.dependency = dependency
+        self.collection = dataSource
     }
     
     // MARK: MovieCollection ViewModel
     
-    var collection = [MovieViewModel]()
-    var scrollPosition: Float = 0.0
+    var newIndexPaths: [IndexPath]?
+    
+    var dataSource: UICollectionViewDataSource & UICollectionViewDelegate {
+        return self.collection
+    }
     
     func loadMore() {
-        guard
-            lastUpdate < Date(timeIntervalSinceNow: TimeInterval(-updateTrashhold)) && !isOnSearch
-        else { return }
-        
-        self.lastUpdate = Date()
-        let region = dependency.currentLocation
-        self.model.load(page: page, region: region) { [weak self] (data, error) in
-            guard
-                let strongSelf = self
-            else { return }
-            
-            if let data = data {
-                strongSelf.page += 1
-                strongSelf.collectionCache = strongSelf.collectionCache + data
-                strongSelf.collection = strongSelf.collectionCache.map(strongSelf.toViewModel)
-                strongSelf.viewDelegate?.itemsDidChange()
-                return
-            }
-            
-            strongSelf.coordinatorDelegate?.viewModelDidThrowError(strongSelf, error: error)
+        if let searchQuery = searchQuery {
+            self.model.search(query: searchQuery, page: page, than: handleLoadMore)
+        } else {
+            let region = dependency.currentLocation
+            self.model.load(page: page, region: region, than: handleLoadMore)
         }
     }
     
     func search(query: String) {
-        isOnSearch = true
-        self.model.search(query: query) { [weak self]  (data, error) in
-            guard
-                let strongSelf = self
-            else { return }
-            
-            if let data = data {
-                strongSelf.page = 1
-                strongSelf.collection = data.map(strongSelf.toViewModel)
-                strongSelf.viewDelegate?.itemsDidChange()
-                return
-            }
-            
-            strongSelf.coordinatorDelegate?.viewModelDidThrowError(strongSelf, error: error)
+        searchQuery = query
+        page = 1
+        if query.count > 0 {
+            loadMore()
         }
     }
     
     func stopSearch() {
-        isOnSearch = false
-        self.collection = self.collectionCache.map(toViewModel)
-        self.viewDelegate?.itemsDidChange()
-    }
-    
-    func updateScrollPosition(_ position: Float) {
-        self.scrollPosition = position
+        self.searchQuery = nil
+        self.page = 1
+        self.loadMore()
     }
     
     func selectMovie(item: MovieViewModel) {
@@ -113,5 +87,35 @@ class InCinemaMovieCollectionViewModel: MovieCollectionViewModel {
     func toViewModel(movie: Movie) -> MovieViewModel {
         let movieModel = InCinemaMovieModel(movie: movie, dependency: self.dependency)
         return InCinemaMovieViewModel(model: movieModel)
+    }
+    
+    private func handleLoadMore(responce: ([Movie], Int)?, error: Error?) {
+        guard let (data, total) = responce else {
+            self.coordinatorDelegate?.viewModelDidThrowError(self, error: error)
+            return
+        }
+        
+        page += 1
+        let newMovies = data.map(self.toViewModel)
+        if page > 2 {
+            self.newIndexPaths = self.collection.appendCollection(with: newMovies)
+        } else {
+            self.collection.resetCollection(with: newMovies, total: total)
+        }
+
+        self.viewDelegate?.itemsDidChange()
+    }
+}
+
+extension InCinemaMovieCollectionViewModel {
+    func register(collectionView: UICollectionView, scrollDelegate: ScrollingToBottomDelegate, selectDelegate: SelectionDelegate) {
+        collectionView.delegate = self.collection
+        collectionView.dataSource = self.collection
+        self.collection.scrollDelegate = scrollDelegate
+        self.collection.selectionDelegate = selectDelegate
+        collectionView.register(MovieCollectionCell.self, forCellWithReuseIdentifier: CollectionHandler.cellId)
+        collectionView.register(MovieCollectionFooter.self,
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+                                withReuseIdentifier: CollectionHandler.footerId)
     }
 }

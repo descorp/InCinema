@@ -58,6 +58,9 @@ class NowInCinemaCoodrinator: Coordinator, MovieCollectionViewModelCoordinatorDe
     private lazy var viewController: MovieCollectionView = {
         let viewController = MovieCollectionView(viewModel: viewModel)
         viewModel.viewDelegate = viewController
+        viewModel.register(collectionView: viewController.collectionView,
+                           scrollDelegate: viewController,
+                           selectDelegate: viewController)
         return viewController
     }()
 }
