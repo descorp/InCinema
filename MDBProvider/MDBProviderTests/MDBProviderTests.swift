@@ -127,4 +127,22 @@ class MDBProviderTests: XCTestCase {
         
         waitForExpectations(timeout: 5, handler: nil)
     }
+    
+    func testUpcomingSuccessfull() {
+        let sut = MDBProvider(apiKey: apiKey)
+        let successExpectation = expectation(description: "Success")
+        sut.request(Endpoint.upcoming()) { (result) in
+            switch result {
+            case let .success(responce):
+                XCTAssertNotNil(responce)
+                XCTAssertTrue(responce.results.count > 0)
+                successExpectation.fulfill()
+            case let .failure(error):
+                print(error)
+                XCTFail()
+            }
+        }
+        
+        waitForExpectations(timeout: 5, handler: nil)
+    }
 }

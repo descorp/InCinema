@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		40488317219DE35200000B93 /* Upcoming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40488316219DE35200000B93 /* Upcoming.swift */; };
 		40A89BA9217FB7A60024948F /* MovieDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A89BA8217FB7A60024948F /* MovieDetails.swift */; };
 		40A89BAB217FB8210024948F /* GetMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A89BAA217FB8210024948F /* GetMovie.swift */; };
 		40A89BAD217FB9410024948F /* Parsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A89BAC217FB9410024948F /* Parsable.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		40488316219DE35200000B93 /* Upcoming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Upcoming.swift; sourceTree = "<group>"; };
 		40A89BA8217FB7A60024948F /* MovieDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetails.swift; sourceTree = "<group>"; };
 		40A89BAA217FB8210024948F /* GetMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMovie.swift; sourceTree = "<group>"; };
 		40A89BAC217FB9410024948F /* Parsable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parsable.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				40EC9708217BC4A8009AE660 /* NowPlaying.swift */,
 				40EC970B217BC4E9009AE660 /* Search.swift */,
 				40A89BAA217FB8210024948F /* GetMovie.swift */,
+				40488316219DE35200000B93 /* Upcoming.swift */,
 			);
 			path = Movies;
 			sourceTree = "<group>";
@@ -296,6 +299,7 @@
 			files = (
 				40F8217A217CF30600B55CDF /* MDBProvider.swift in Sources */,
 				40F8217D217D061800B55CDF /* SecureSeeeion.swift in Sources */,
+				40488317219DE35200000B93 /* Upcoming.swift in Sources */,
 				40FD56CE2181FB77007BACD7 /* ImageLoader.swift in Sources */,
 				40EC970C217BC4E9009AE660 /* Search.swift in Sources */,
 				40A89BAB217FB8210024948F /* GetMovie.swift in Sources */,

@@ -13,6 +13,11 @@ protocol MovieCollectionViewModelCoordinatorDelegate: CoordinatorDelegate {
     func viewModelDidSelectMovie(_ viewModel: ViewModel, item: MovieViewModel)
 }
 
+enum MoviesType {
+    case upcoming
+    case inCinema
+}
+
 protocol MovieCollectionViewModel: ViewModel {
     
     var dataSource: UICollectionViewDataSource & UICollectionViewDelegate  { get }
@@ -22,6 +27,7 @@ protocol MovieCollectionViewModel: ViewModel {
     func search(query: String)
     func stopSearch()
     func selectMovie(item: MovieViewModel)
+    func switchType(_ type: MoviesType)
 }
 
 class InCinemaMovieCollectionViewModel: MovieCollectionViewModel {
@@ -33,6 +39,7 @@ class InCinemaMovieCollectionViewModel: MovieCollectionViewModel {
     private var page = 1
     private var searchQuery: String? = nil
     private let collection: CollectionHandler
+    private var type: MoviesType = .inCinema
     
     var title: String {
         return String.localize(key: "collection_title")
@@ -62,7 +69,7 @@ class InCinemaMovieCollectionViewModel: MovieCollectionViewModel {
             self.model.search(query: searchQuery, page: page, than: handleLoadMore)
         } else {
             let region = dependency.currentLocation
-            self.model.load(page: page, region: region, than: handleLoadMore)
+            self.model.load(type: type, page: page, region: region, than: handleLoadMore)            
         }
     }
     
@@ -105,6 +112,12 @@ class InCinemaMovieCollectionViewModel: MovieCollectionViewModel {
 
         self.viewDelegate?.itemsDidChange()
     }
+    
+    func switchType(_ type: MoviesType) {
+        self.type = type
+        loadMore()
+    }
+    
 }
 
 extension InCinemaMovieCollectionViewModel {
@@ -117,5 +130,8 @@ extension InCinemaMovieCollectionViewModel {
         collectionView.register(MovieCollectionFooter.self,
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
                                 withReuseIdentifier: CollectionHandler.footerId)
+        collectionView.register(MovieCollectionHeader.self,
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                withReuseIdentifier: CollectionHandler.headerId)
     }
 }

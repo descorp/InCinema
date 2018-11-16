@@ -13,6 +13,7 @@ protocol IMoviesProvider {
     func getMoviesInCinema(region: String, page: Int, language: String, than handler: @escaping (([Movie], Int)?, Error?) -> Void)
     func getMovie(id: Int, language: String, than handler: @escaping (MovieDetails?, Error?) -> Void)
     func search(query: String, language: String, page: Int, than handler: @escaping (([Movie], Int)?, Error?) -> Void)
+    func getMoviesUpcoming(region: String, page: Int, language: String, than handler: @escaping (([Movie], Int)?, Error?) -> Void)
 }
 
 protocol HasImageLoader {
@@ -69,6 +70,17 @@ class MoviesService: IMoviesProvider, HasImageLoader {
             switch result {
             case .success(let responce):
                 handler(responce, nil)
+            case .failure(let error):
+                handler(nil, error)
+            }
+        }
+    }
+    
+    func getMoviesUpcoming(region: String, page: Int, language: String, than handler: @escaping (([Movie], Int)?, Error?) -> Void) {
+        self.provider.request(Endpoint.upcoming(page: page, region: region, language: language)) { (result) in
+            switch result {
+            case .success(let responce):
+                handler((responce.results, responce.totalResults), nil)
             case .failure(let error):
                 handler(nil, error)
             }
