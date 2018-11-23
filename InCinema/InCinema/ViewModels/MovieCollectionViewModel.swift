@@ -18,7 +18,7 @@ enum MoviesType {
     case inCinema
 }
 
-protocol MovieCollectionViewModel: ViewModel {
+protocol MovieCollectionViewModel: ViewModel, TypeSelectoinDelegate {
     
     var dataSource: UICollectionViewDataSource & UICollectionViewDelegate  { get }
     var newIndexPaths: [IndexPath]? { get }
@@ -27,7 +27,6 @@ protocol MovieCollectionViewModel: ViewModel {
     func search(query: String)
     func stopSearch()
     func selectMovie(item: MovieViewModel)
-    func switchType(_ type: MoviesType)
 }
 
 class InCinemaMovieCollectionViewModel: MovieCollectionViewModel {
@@ -56,7 +55,7 @@ class InCinemaMovieCollectionViewModel: MovieCollectionViewModel {
         self.collection = dataSource
     }
     
-    // MARK: MovieCollection ViewModel
+    // MARK: MovieCollection ViewModel implementation
     
     var newIndexPaths: [IndexPath]?
     
@@ -96,6 +95,16 @@ class InCinemaMovieCollectionViewModel: MovieCollectionViewModel {
         return InCinemaMovieViewModel(model: movieModel)
     }
     
+    // MARK: TypeSelectoinDelegate implementation
+    
+    func typeDidSelected(_ type: MoviesType) {
+        self.type = type
+        self.page = 1
+        loadMore()
+    }
+    
+    // MARK: Private Methods
+    
     private func handleLoadMore(responce: ([Movie], Int)?, error: Error?) {
         guard let (data, total) = responce else {
             self.coordinatorDelegate?.viewModelDidThrowError(self, error: error)
@@ -112,20 +121,18 @@ class InCinemaMovieCollectionViewModel: MovieCollectionViewModel {
 
         self.viewDelegate?.itemsDidChange()
     }
-    
-    func switchType(_ type: MoviesType) {
-        self.type = type
-        loadMore()
-    }
-    
 }
 
 extension InCinemaMovieCollectionViewModel {
-    func register(collectionView: UICollectionView, scrollDelegate: ScrollingToBottomDelegate, selectDelegate: SelectionDelegate) {
+    func register(collectionView: UICollectionView,
+                  scrollDelegate: ScrollingToBottomDelegate? = nil,
+                  selectDelegate: SelectionDelegate? = nil,
+                  typeDelegate: TypeSelectoinDelegate? = nil) {
         collectionView.delegate = self.collection
         collectionView.dataSource = self.collection
         self.collection.scrollDelegate = scrollDelegate
         self.collection.selectionDelegate = selectDelegate
+        self.collection.typeDelegate = typeDelegate
         collectionView.register(MovieCollectionCell.self, forCellWithReuseIdentifier: CollectionHandler.cellId)
         collectionView.register(MovieCollectionFooter.self,
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,

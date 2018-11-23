@@ -60,7 +60,8 @@ class NowInCinemaCoodrinator: Coordinator, MovieCollectionViewModelCoordinatorDe
         viewModel.viewDelegate = viewController
         viewModel.register(collectionView: viewController.collectionView,
                            scrollDelegate: viewController,
-                           selectDelegate: viewController)
+                           selectDelegate: viewController,
+                           typeDelegate: viewModel)
         return viewController
     }()
 }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4048831C21A2D55C00000B93 /* MovieCollectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4048831B21A2D55C00000B93 /* MovieCollectionHeader.swift */; };
 		4089649621826F5F00F6E3A7 /* MovieDetailsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4089649521826F5F00F6E3A7 /* MovieDetailsCoordinator.swift */; };
 		40A89B8F217FAF1F0024948F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 40A89B8E217FAF1F0024948F /* Localizable.strings */; };
 		40A89B97217FB0B50024948F /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A89B95217FB0B50024948F /* Coordinator.swift */; };
@@ -86,6 +87,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4048831B21A2D55C00000B93 /* MovieCollectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollectionHeader.swift; sourceTree = "<group>"; };
 		4089649521826F5F00F6E3A7 /* MovieDetailsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsCoordinator.swift; sourceTree = "<group>"; };
 		40A89B8E217FAF1F0024948F /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		40A89B95217FB0B50024948F /* Coordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -282,6 +284,7 @@
 				40FD56AF2180B97D007BACD7 /* MovieCollectionView.swift */,
 				40C190D521866CBF00D51E4B /* MovieCollectionCell.swift */,
 				40C190D921868EBB00D51E4B /* MovieCollectionFooter.swift */,
+				4048831B21A2D55C00000B93 /* MovieCollectionHeader.swift */,
 			);
 			path = MovieCollection;
 			sourceTree = "<group>";
@@ -426,6 +429,7 @@
 				40B814792199B97100B5E3CF /* Throttler.swift in Sources */,
 				40FD56B82180BDB9007BACD7 /* MovieCollectionViewModel.swift in Sources */,
 				40A89B9A217FB0BD0024948F /* AppCoordinator.swift in Sources */,
+				4048831C21A2D55C00000B93 /* MovieCollectionHeader.swift in Sources */,
 				40FD56B62180BA7B007BACD7 /* MovieDetailsView.swift in Sources */,
 				40FD56BF2180C37D007BACD7 /* MovieCollectionModel.swift in Sources */,
 				40A89BA0217FB1640024948F /* NowInCinemaCoodrinator.swift in Sources */,

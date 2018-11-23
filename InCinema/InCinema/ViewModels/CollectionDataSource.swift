@@ -17,15 +17,21 @@ protocol SelectionDelegate: class {
     func didSelectItem(viewModel: MovieViewModel)
 }
 
+protocol TypeSelectoinDelegate: class {
+    func typeDidSelected(_ type: MoviesType)
+}
+
 class CollectionHandler: NSObject, UICollectionViewDataSource, UICollectionViewDelegate {
     
     static let cellId = "MovieCollectionCell"
     static let footerId = "MovieCollectionFooter"
+    static let headerId = "MovieCollectionHeader"
     
     private var collection: [MovieViewModel]
     
     public weak var scrollDelegate: ScrollingToBottomDelegate?
     public weak var selectionDelegate: SelectionDelegate?
+    public weak var typeDelegate: TypeSelectoinDelegate?
     
     init(collection: [MovieViewModel] = []) {
         self.collection = collection
@@ -63,9 +69,17 @@ class CollectionHandler: NSObject, UICollectionViewDataSource, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        return collectionView.dequeueReusableSupplementaryView(ofKind: kind,
-                                                               withReuseIdentifier: CollectionHandler.footerId,
-                                                               for: indexPath)
+        if kind == UICollectionView.elementKindSectionHeader {
+            let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
+                                                                       withReuseIdentifier: CollectionHandler.headerId,
+                                                                       for: indexPath)
+            (view as? MovieCollectionHeader)?.delegate = self.typeDelegate
+            return view
+        }
+        
+       return collectionView.dequeueReusableSupplementaryView(ofKind: kind,
+                                                              withReuseIdentifier: CollectionHandler.footerId,
+                                                              for: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
