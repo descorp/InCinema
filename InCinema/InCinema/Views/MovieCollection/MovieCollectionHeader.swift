@@ -13,11 +13,13 @@ class MovieCollectionHeader: UICollectionReusableView {
     
     weak var delegate: TypeSelectoinDelegate?
     
-    lazy var segment: UISegmentedControl = {
-        let segment = UISegmentedControl(items: [UIImage(named: "in_cinema")!, UIImage(named: "upcoming")!])
+    lazy var movieTypeSelector: UISegmentedControl = {
+        let segment = UISegmentedControl(items: [String.localize(key: "in_cinema_title"),
+                                                 String.localize(key: "upcoming_title")])
+        segment.selectedSegmentIndex = 0
         segment.tintColor = UIColor.white
-        segment.apportionsSegmentWidthsByContent = false
-        UIImageView.appearance(whenContainedInInstancesOf: [UISegmentedControl.self]).contentMode = .scaleAspectFit
+        segment.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .semibold)],
+                                       for: UIControl.State.normal)
         segment.addTarget(self, action: #selector(segmentSelected(_:)) , for: UIControl.Event.valueChanged)
         return segment
     }()
@@ -33,8 +35,8 @@ class MovieCollectionHeader: UICollectionReusableView {
     }
     
     func layout() {
-        self.addSubview(segment)
-        segment.fill(container: self, padding: UIEdgeInsets(top: 10, left: 36, bottom: 10, right: 36))
+        self.addSubview(movieTypeSelector)
+        movieTypeSelector.fill(container: self, padding: UIEdgeInsets(top: 10, left: 36, bottom: 10, right: 36))
     }
     
     @objc func segmentSelected(_ control: UISegmentedControl) {
