@@ -10,7 +10,7 @@ import Foundation
 import MDBProvider
 
 protocol MovieCollectionModel {
-    func load(page: Int, region: String, than handler: @escaping (([Movie], Int)?, Error?) -> Void)
+    func load(type: MoviesType, page: Int, region: String, than handler: @escaping (([Movie], Int)?, Error?) -> Void)
     func search(query: String, page: Int, than handler: @escaping (([Movie], Int)?, Error?) -> Void)
 }
 
@@ -24,11 +24,17 @@ class InCinemaMovieCollectionModel: MovieCollectionModel {
         self.dependency = dependency
     }
     
-    func load(page: Int, region: String, than handler: @escaping (([Movie], Int)?, Error?) -> Void) {
+    func load(type: MoviesType, page: Int, region: String, than handler: @escaping (([Movie], Int)?, Error?) -> Void) {
         let locale = self.dependency.currentLocale
         trottler.throttle {
             print("Update: \(page)")
-            self.dependency.moviesService.getMoviesInCinema(region: region, page: page, language: locale, than: handler)
+            switch type {
+            case .upcoming:
+                self.dependency.moviesService.getMoviesUpcoming(region: region, page: page, language: locale, than: handler)
+            case .inCinema:
+                self.dependency.moviesService.getMoviesInCinema(region: region, page: page, language: locale, than: handler)
+            }
+            
         }
     }
     

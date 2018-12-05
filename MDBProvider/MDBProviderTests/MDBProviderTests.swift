@@ -24,21 +24,15 @@ class MDBProviderTests: XCTestCase {
     }
 
     func testNowPlayingSuccessfull() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
         let sut = MDBProvider(apiKey: apiKey)
         let successExpectation = expectation(description: "Success")
         
         sut.request(Endpoint.nowPlaying()) { (result) in
-            switch result {
-            case let .success(responce):
+            if case .success(let responce) = result {
                 XCTAssertNotNil(responce)
                 XCTAssertNotNil(responce.results)
                 XCTAssertTrue(responce.results.count > 0)
                 successExpectation.fulfill()
-            case let .failure(error):
-                print(error)
-                XCTFail()
             }
         }
         
@@ -46,21 +40,15 @@ class MDBProviderTests: XCTestCase {
     }
     
     func testSearchSuccessfull() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
         let sut = MDBProvider(apiKey: apiKey)
         let successExpectation = expectation(description: "Success")
         
         sut.request(Endpoint.searchMovie(query: "Solaris")) { (result) in
-            switch result {
-            case let .success(responce):
+            if case .success(let responce) = result {
                 XCTAssertNotNil(responce)
                 XCTAssertNotNil(responce.results)
                 XCTAssertTrue(responce.results.count > 0)
                 successExpectation.fulfill()
-            case let .failure(error):
-                print(error)
-                XCTFail()
             }
         }
         
@@ -68,20 +56,14 @@ class MDBProviderTests: XCTestCase {
     }
     
     func testGetMoviewSuccessfull() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
         let sut = MDBProvider(apiKey: apiKey)
         let successExpectation = expectation(description: "Success")
         
         sut.request(Endpoint.getMovie(id: movieId)) { (result) in
-            switch result {
-            case let .success(responce):
+            if case .success(let responce) = result {
                 XCTAssertNotNil(responce)
                 XCTAssertEqual(responce.id, self.movieId)
                 successExpectation.fulfill()
-            case let .failure(error):
-                print(error)
-                XCTFail()
             }
         }
         
@@ -89,21 +71,15 @@ class MDBProviderTests: XCTestCase {
     }
     
     func testLoadImageSuccessfull() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
         let sut = MDBProvider(apiKey: apiKey)
         let successExpectation = expectation(description: "Success")
         
         sut.request(Endpoint.loadImage(path: imagePath)) { (result) in
-            switch result {
-            case let .success(responce):
+            if case .success(let responce) = result {
                 XCTAssertNotNil(responce)
                 XCTAssertTrue(responce.size.width > 0)
                 XCTAssertTrue(responce.size.height > 0)
                 successExpectation.fulfill()
-            case let .failure(error):
-                print(error)
-                XCTFail()
             }
         }
         
@@ -114,14 +90,36 @@ class MDBProviderTests: XCTestCase {
         let sut = MDBProvider(apiKey: apiKey)
         let successExpectation = expectation(description: "Success")
         sut.request(Endpoint.loadImageData(path: imagePath)) { (result) in
-            switch result {
-            case let .success(responce):
+            if case .success(let responce) = result {
                 XCTAssertNotNil(responce)
                 XCTAssertTrue(responce.count > 0)
                 successExpectation.fulfill()
-            case let .failure(error):
-                print(error)
-                XCTFail()
+            }
+        }
+        
+        waitForExpectations(timeout: 5, handler: nil)
+    }
+    
+    func testUpcomingSuccessfull() {
+        let sut = MDBProvider(apiKey: apiKey)
+        let successExpectation = expectation(description: "Success")
+        sut.request(Endpoint.upcoming()) { (result) in
+            if case .success(let responce) = result {
+                XCTAssertNotNil(responce)
+                XCTAssertTrue(responce.results.count > 0)
+                successExpectation.fulfill()
+            }
+        }
+        
+        waitForExpectations(timeout: 5, handler: nil)
+    }
+    
+    func testFailing() {
+        let sut = MDBProvider(apiKey: "wrong_apiKey")
+        let successExpectation = expectation(description: "Failure")
+        sut.request(Endpoint.upcoming()) { (result) in
+            if case .failure(_) = result {
+                successExpectation.fulfill()
             }
         }
         

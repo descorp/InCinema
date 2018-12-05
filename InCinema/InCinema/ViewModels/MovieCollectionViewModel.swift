@@ -13,7 +13,12 @@ protocol MovieCollectionViewModelCoordinatorDelegate: CoordinatorDelegate {
     func viewModelDidSelectMovie(_ viewModel: ViewModel, item: MovieViewModel)
 }
 
-protocol MovieCollectionViewModel: ViewModel {
+enum MoviesType {
+    case upcoming
+    case inCinema
+}
+
+protocol MovieCollectionViewModel: ViewModel, TypeSelectoinDelegate {
     
     var dataSource: UICollectionViewDataSource & UICollectionViewDelegate  { get }
     var newIndexPaths: [IndexPath]? { get }
@@ -33,6 +38,7 @@ class InCinemaMovieCollectionViewModel: MovieCollectionViewModel {
     private var page = 1
     private var searchQuery: String? = nil
     private let collection: CollectionHandler
+    private var type: MoviesType = .inCinema
     
     var title: String {
         return String.localize(key: "collection_title")
@@ -49,7 +55,7 @@ class InCinemaMovieCollectionViewModel: MovieCollectionViewModel {
         self.collection = dataSource
     }
     
-    // MARK: MovieCollection ViewModel
+    // MARK: MovieCollection ViewModel implementation
     
     var newIndexPaths: [IndexPath]?
     
@@ -62,7 +68,7 @@ class InCinemaMovieCollectionViewModel: MovieCollectionViewModel {
             self.model.search(query: searchQuery, page: page, than: handleLoadMore)
         } else {
             let region = dependency.currentLocation
-            self.model.load(page: page, region: region, than: handleLoadMore)
+            self.model.load(type: type, page: page, region: region, than: handleLoadMore)            
         }
     }
     
@@ -89,6 +95,16 @@ class InCinemaMovieCollectionViewModel: MovieCollectionViewModel {
         return InCinemaMovieViewModel(model: movieModel)
     }
     
+    // MARK: TypeSelectoinDelegate implementation
+    
+    func typeDidSelected(_ type: MoviesType) {
+        self.type = type
+        self.page = 1
+        loadMore()
+    }
+    
+    // MARK: Private Methods
+    
     private func handleLoadMore(responce: ([Movie], Int)?, error: Error?) {
         guard let (data, total) = responce else {
             self.coordinatorDelegate?.viewModelDidThrowError(self, error: error)
@@ -108,14 +124,21 @@ class InCinemaMovieCollectionViewModel: MovieCollectionViewModel {
 }
 
 extension InCinemaMovieCollectionViewModel {
-    func register(collectionView: UICollectionView, scrollDelegate: ScrollingToBottomDelegate, selectDelegate: SelectionDelegate) {
+    func register(collectionView: UICollectionView,
+                  scrollDelegate: ScrollingToBottomDelegate? = nil,
+                  selectDelegate: SelectionDelegate? = nil,
+                  typeDelegate: TypeSelectoinDelegate? = nil) {
         collectionView.delegate = self.collection
         collectionView.dataSource = self.collection
         self.collection.scrollDelegate = scrollDelegate
         self.collection.selectionDelegate = selectDelegate
+        self.collection.typeDelegate = typeDelegate
         collectionView.register(MovieCollectionCell.self, forCellWithReuseIdentifier: CollectionHandler.cellId)
         collectionView.register(MovieCollectionFooter.self,
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
                                 withReuseIdentifier: CollectionHandler.footerId)
+        collectionView.register(MovieCollectionHeader.self,
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                withReuseIdentifier: CollectionHandler.headerId)
     }
 }
