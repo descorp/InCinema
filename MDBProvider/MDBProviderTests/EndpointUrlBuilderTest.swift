@@ -36,11 +36,11 @@ class EndpointUrlBuilderTests: XCTestCase {
     }
     
     func testGetNowShowingFullEndpoint() {
-        let endpoint = Endpoint.nowPlaying(page: 2, region: "RU", language: "RU")
+        let endpoint = Endpoint.nowPlaying(page: 2, region: "RU", language: "ru")
         let sut = endpoint.buildUrl(for: config)
         
         XCTAssertNotNil(sut)
-        XCTAssertEqual(sut!.absoluteString, "https://data.testing.api.com/movie/now_playing?page=2&region=RU&language=RU&api_key=MY_KEY")
+        XCTAssertEqual(sut!.absoluteString, "https://data.testing.api.com/movie/now_playing?page=2&region=RU&language=ru&api_key=MY_KEY")
     }
     
     func testImageEndpoint() {
@@ -49,5 +49,13 @@ class EndpointUrlBuilderTests: XCTestCase {
         
         XCTAssertNotNil(sut)
         XCTAssertEqual(sut!.absoluteString, "https://image.testing.api.com/5/t/p/w500/kqjL17yufvn9OVLyXYpvtyrFfak.jpg?api_key=MY_KEY")
+    }
+    
+    func testUpcomingEndpoint() {
+        let endpoint = Endpoint.upcoming(page: 2, region: "RU", language: "ru")
+        let sut = endpoint.buildUrl(for: config)
+        
+        XCTAssertNotNil(sut)
+        XCTAssertEqual(sut!.absoluteString, "https://data.testing.api.com/movie/upcoming?page=2&region=RU&language=ru&api_key=MY_KEY")
     }
 }
