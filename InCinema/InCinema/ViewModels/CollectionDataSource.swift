@@ -14,7 +14,7 @@ protocol ScrollingToBottomDelegate: class {
 }
 
 protocol SelectionDelegate: class {
-    func didSelectItem(viewModel: MovieViewModel)
+    func didSelectItem(viewModel: MovieViewModel, at position: CGRect)
 }
 
 protocol TypeSelectoinDelegate: class {
@@ -84,7 +84,12 @@ class CollectionHandler: NSObject, UICollectionViewDataSource, UICollectionViewD
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let viewModel = collection[indexPath.item]
-        self.selectionDelegate?.didSelectItem(viewModel: viewModel)
+
+        let attributes = collectionView.layoutAttributesForItem(at: indexPath)
+        let cellRect = attributes!.frame
+        let position =  collectionView.convert(cellRect, to: collectionView.superview)
+
+        self.selectionDelegate?.didSelectItem(viewModel: viewModel, at: position )
     }
     
     func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {

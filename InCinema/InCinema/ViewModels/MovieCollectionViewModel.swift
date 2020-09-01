@@ -10,7 +10,7 @@ import Foundation
 import MDBProvider
 
 protocol MovieCollectionViewModelCoordinatorDelegate: CoordinatorDelegate {
-    func viewModelDidSelectMovie(_ viewModel: ViewModel, item: MovieViewModel)
+    func viewModelDidSelectMovie(_ viewModel: ViewModel, item: MovieViewModel, at position: CGRect)
 }
 
 enum MoviesType {
@@ -26,7 +26,7 @@ protocol MovieCollectionViewModel: ViewModel, TypeSelectoinDelegate {
     func loadMore()
     func search(query: String)
     func stopSearch()
-    func selectMovie(item: MovieViewModel)
+    func selectMovie(item: MovieViewModel, at position: CGRect)
 }
 
 class InCinemaMovieCollectionViewModel: MovieCollectionViewModel {
@@ -86,8 +86,8 @@ class InCinemaMovieCollectionViewModel: MovieCollectionViewModel {
         self.loadMore()
     }
     
-    func selectMovie(item: MovieViewModel) {
-        self.coordinatorDelegate?.viewModelDidSelectMovie(self, item: item)
+    func selectMovie(item: MovieViewModel, at position: CGRect) {
+        self.coordinatorDelegate?.viewModelDidSelectMovie(self, item: item, at: position)
     }
     
     func toViewModel(movie: Movie) -> MovieViewModel {

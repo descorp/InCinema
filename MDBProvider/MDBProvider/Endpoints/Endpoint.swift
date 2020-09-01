@@ -48,6 +48,6 @@ extension URLComponents {
     }
     
     private mutating func appendPath(_ component: String) {
-        self.path += String.init(stringInterpolation: "/", component)
+        self.path += "/" + component
     }
 }

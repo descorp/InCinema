@@ -11,9 +11,11 @@ import UIKit
 import MDBProvider
 
 class NowInCinemaCoodrinator: Coordinator, MovieCollectionViewModelCoordinatorDelegate {
+    
     typealias Dependency = HasLocation & HasMDB & HasLocale & HasImageService
     
-    let dependency: Dependency
+    private let dependency: Dependency
+    private var root: UINavigationController!
     
     init(withViewController viewController: UIViewController,
          parentCoordinator coordinator: Coordinator?,
@@ -26,15 +28,17 @@ class NowInCinemaCoodrinator: Coordinator, MovieCollectionViewModelCoordinatorDe
         guard
             let navigationController =  (rootViewController as? UINavigationController)
         else { return }
-        
-        navigationController.navigationBar.tintColor = UIColor.white
-        navigationController.navigationBar.barStyle = .blackTranslucent
-        navigationController.navigationBar.prefersLargeTitles = true
-        navigationController.setViewControllers([viewController], animated: false)
+
+        root = navigationController
+        root.navigationBar.tintColor = UIColor.white
+        root.navigationBar.barStyle = .blackTranslucent
+        root.navigationBar.prefersLargeTitles = true
+        root.setViewControllers([viewController], animated: false)
     }
     
-    func viewModelDidSelectMovie(_ viewModel: ViewModel, item: MovieViewModel) {
+    func viewModelDidSelectMovie(_ viewModel: ViewModel, item: MovieViewModel, at position: CGRect) {
         let detailCoordinator = MovieDetailsCoordinator(viewModel: item,
+                                                        origin: position,
                                                         withViewController: rootViewController,
                                                         andParentCoordinator: self)
         self.addChildCoordinator(detailCoordinator)

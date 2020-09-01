@@ -21,5 +21,18 @@ extension UIView {
         container.addConstraints(horizontal)
         container.addConstraints(vertical)
     }
+
+    func center(of container: UIView) {
+        let constraints = [
+            self.centerYAnchor.constraint(equalTo: container.centerYAnchor),
+            self.centerXAnchor.constraint(equalTo: container.centerXAnchor),
+            self.topAnchor.constraint(lessThanOrEqualTo: container.topAnchor),
+            self.leftAnchor.constraint(lessThanOrEqualTo: container.leftAnchor),
+            self.bottomAnchor.constraint(greaterThanOrEqualTo: container.bottomAnchor),
+             self.rightAnchor.constraint(greaterThanOrEqualTo: container.rightAnchor)
+        ]
+        NSLayoutConstraint.activate(constraints)
+    }
+
     
 }

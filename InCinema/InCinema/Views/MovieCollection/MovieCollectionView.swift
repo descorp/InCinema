@@ -76,8 +76,8 @@ extension MovieCollectionView: ScrollingToBottomDelegate {
 }
 
 extension MovieCollectionView: SelectionDelegate {
-    func didSelectItem(viewModel: MovieViewModel) {
-        self.viewModel.selectMovie(item: viewModel)
+    func didSelectItem(viewModel: MovieViewModel, at position: CGRect) {
+        self.viewModel.selectMovie(item: viewModel, at: position)
     }
 }
 

@@ -68,7 +68,20 @@ class MovieDetailsView: UIViewController, ViewDelegate {
         movieDescription.setContentHuggingPriority(UILayoutPriority.defaultLow, for: NSLayoutConstraint.Axis.vertical)
         viewModel.loadImage(.backdrop)
     }
-    
+
+    private lazy var touchView = UIView()
+    private lazy var animator = UIViewPropertyAnimator()
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        let swipe = UIPanGestureRecognizer(target: self, action: #selector(handleGesture))
+        touchView.addGestureRecognizer(swipe)
+        view.addSubview(touchView)
+
+        touchView.fill(container: view)
+    }
+
     func itemsDidChange() {
         DispatchQueue.main.async { [weak self] in
             if let image = self?.viewModel.backdropImage {
@@ -79,6 +92,24 @@ class MovieDetailsView: UIViewController, ViewDelegate {
             }
             self?.movieTitle.text = self?.viewModel.movieTitle
             self?.movieDescription.text = self?.viewModel.plotDescription
+        }
+    }
+
+    @objc func handleGesture(recognizer: UIPanGestureRecognizer) {
+        switch recognizer.state {
+        case .began:
+            animator = UIViewPropertyAnimator(duration: 3, curve: .easeOut, animations: {
+                self.view.transform = CGAffineTransform(translationX: 275, y: 0)
+                self.view.alpha = 0
+            })
+            animator.startAnimation()
+            animator.pauseAnimation()
+        case .changed:
+            animator.fractionComplete = recognizer.translation(in: view).x / 275
+        case .ended:
+            animator.continueAnimation(withTimingParameters: nil, durationFactor: 0)
+        default:
+            ()
         }
     }
     

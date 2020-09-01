@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class Coordinator {
+open class Coordinator: NSObject {
     
     internal(set) var childCoordinators: [Coordinator] = []
     
@@ -56,11 +56,5 @@ extension Coordinator {
             coordinator.finish()
         }
         childCoordinators.removeAll()
-    }
-}
-
-extension Coordinator: Equatable {
-    static func == (lhs: Coordinator, rhs: Coordinator) -> Bool {
-        return lhs === rhs
     }
 }
