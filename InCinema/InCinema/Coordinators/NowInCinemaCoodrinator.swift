@@ -42,7 +42,9 @@ class NowInCinemaCoodrinator: Coordinator, MovieCollectionViewModelCoordinatorDe
     }
     
     func viewModelDidThrowError(_ viewModel: ViewModel, error: Error?) {
-        // TODO: Show Error
+        DispatchQueue.main.async {
+            self.root.viewControllers = [ErrorView(error: error!)]
+        }
     }
     
     private lazy var model = {

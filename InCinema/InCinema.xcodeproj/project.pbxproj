@@ -39,6 +39,7 @@
 		40FD56C52181ABDB007BACD7 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FD56C42181ABDB007BACD7 /* ViewModel.swift */; };
 		40FD56C72181BB0F007BACD7 /* LocaleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FD56C62181BB0F007BACD7 /* LocaleService.swift */; };
 		40FD56C92181E092007BACD7 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FD56C82181E092007BACD7 /* ImageService.swift */; };
+		E7C834F024FEA6FE00834B6E /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C834EF24FEA6FE00834B6E /* ErrorView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -122,6 +123,7 @@
 		40FD56C42181ABDB007BACD7 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		40FD56C62181BB0F007BACD7 /* LocaleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleService.swift; sourceTree = "<group>"; };
 		40FD56C82181E092007BACD7 /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
+		E7C834EF24FEA6FE00834B6E /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,6 +180,7 @@
 		40A89B94217FAF840024948F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E7C834EE24FEA6DE00834B6E /* Utilities */,
 				40FD56C22181A720007BACD7 /* MovieCollection */,
 				40FD56C32181A733007BACD7 /* MovieDetails */,
 			);
@@ -295,6 +298,14 @@
 				40FD56B52180BA7B007BACD7 /* MovieDetailsView.swift */,
 			);
 			path = MovieDetails;
+			sourceTree = "<group>";
+		};
+		E7C834EE24FEA6DE00834B6E /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				E7C834EF24FEA6FE00834B6E /* ErrorView.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -435,6 +446,7 @@
 				40A89BA0217FB1640024948F /* NowInCinemaCoodrinator.swift in Sources */,
 				40FD56C52181ABDB007BACD7 /* ViewModel.swift in Sources */,
 				40FD56C12180C8E6007BACD7 /* MovieModel.swift in Sources */,
+				E7C834F024FEA6FE00834B6E /* ErrorView.swift in Sources */,
 				40A89B9E217FB0C60024948F /* StringExtensions.swift in Sources */,
 				40FD56BD2180C28F007BACD7 /* MovieViewModel.swift in Sources */,
 				40C190D2218666D700D51E4B /* UIViewExtension.swift in Sources */,
